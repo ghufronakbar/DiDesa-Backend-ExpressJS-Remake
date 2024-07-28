@@ -24,4 +24,4 @@ const removeCloudinary = async (url, target) => {
     }
 };
 
-module.exports = { removeCloudinary };
+module.exports = removeCloudinary ;

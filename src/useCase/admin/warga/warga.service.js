@@ -46,6 +46,12 @@ const deleteWargaService = async (wargaId) => {
     if (!wargaCheck) {
         return new Error('Warga tidak ditemukan')
     }
+    if(wargaCheck.foto){
+        const removeImage = await removeCloudinary(wargaCheck.foto, "profile")
+        if (removeImage instanceof Error) {
+            return removeImage
+        }
+    }
     const warga = await deleteWarga(wargaId)
     return warga
 }

@@ -1,4 +1,4 @@
-const  { getPengaduanController, deletePengaduanController,getPengaduanByIdController } = require('./pengaduanMasyarkat.controller');
+const  { getPengaduanController, deletePengaduanController,getPengaduanByIdController } = require('./pengaduanMasyarakat.controller');
 const express = require('express');
 const router = express.Router();
 

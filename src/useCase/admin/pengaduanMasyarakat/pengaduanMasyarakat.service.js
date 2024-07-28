@@ -1,3 +1,4 @@
+const removeCloudinary = require('../../../utils/removeCloudinary')
 const { getAllPengaduanMasyarakat, countPengaduanMasyarakat, deletePengaduan, getPengaduanMasyarakatById } = require('./pengaduanMasyarakat.repository')
 
 const getPengaduanService = async (page) => {
@@ -18,6 +19,12 @@ const deletePengaduanService = async (pengaduanId) => {
     const pengaduanCheck = await getPengaduanMasyarakatById(pengaduanId)
     if (!pengaduanCheck) {
         return new Error('Pengaduan tidak ditemukan')
+    }
+    if(pengaduanCheck.foto){
+        const removeImage = await removeCloudinary(pengaduanCheck.foto, "pengaduan")
+        if (removeImage instanceof Error) {
+            return removeImage
+        }
     }
     const pengaduan = await deletePengaduan(pengaduanId)
     return pengaduan

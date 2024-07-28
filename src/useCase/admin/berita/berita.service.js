@@ -1,4 +1,4 @@
-const { removeCloudinary } = require("../../../utils/removeCloudinary")
+const removeCloudinary = require("../../../utils/removeCloudinary")
 const { getAllBerita, getBeritaById, createBerita, updateBerita, deleteBerita, publikasiBerita, prioritasBerita, countBerita } = require("./berita.repository")
 
 const showBerita = async (page) => {
@@ -25,7 +25,7 @@ const editBerita = async (id, data) => {
     if (!beritaId) {
         return new Error('Berita tidak ditemukan')
     }
-    if ( data.gambarl && beritaId.gambar) {
+    if (data.gambarl && beritaId.gambar) {
         const removeImage = await removeCloudinary(beritaId.gambar, "berita")
         if (removeImage instanceof Error) {
             return removeImage

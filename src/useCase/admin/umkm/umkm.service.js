@@ -1,3 +1,4 @@
+const removeCloudinary = require('../../../utils/removeCloudinary');
 const { getAllUmkm, countUmkm, getUmkmById, deleteUmkm, approveUmkm } = require('./umkm.repository');
 
 const getAllUmkmService = async (page) => {
@@ -18,6 +19,12 @@ const deleteUmkmService = async (umkmId) => {
     const umkmCheck = await getUmkmById(umkmId)
     if (!umkmCheck) {
         return new Error('UMKM tidak ditemukan')
+    }
+    if(umkmCheck.gambar){
+        const removeImage = await removeCloudinary(umkmCheck.gambar, "umkm")
+        if (removeImage instanceof Error) {
+            return removeImage
+        }
     }
     const umkm = await deleteUmkm(umkmId)
     return umkm
