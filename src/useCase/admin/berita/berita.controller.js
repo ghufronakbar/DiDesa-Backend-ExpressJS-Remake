@@ -89,9 +89,6 @@ const editPublikasi = async (req, res) => {
     const { id } = req.params
     const { publikasi } = req.body
     try {
-        if (!publikasi) {
-            return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
-        }
         let message
         if (publikasi === true) {
             message = 'Berhasil mempublikasikan berita'
@@ -113,9 +110,6 @@ const editPrioritas = async (req, res) => {
     const { id } = req.params
     const { prioritas } = req.body
     try {
-        if (!prioritas) {
-            return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
-        }
         let message
         if (prioritas === true) {
             message = 'Berita ditandai sebagai prioritas'
