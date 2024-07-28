@@ -58,7 +58,7 @@ const editBeritaById = async (req, res) => {
         if (!id || !judul || !isi || !subjudul) {
             return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
         }
-        const data = { judul, isi, subjudul, }
+        const data = { judul, isi, subjudul }
         if (gambar) data.gambar = gambar
         const berita = await editBerita(parseInt(id), data)
         if (berita instanceof Error) {

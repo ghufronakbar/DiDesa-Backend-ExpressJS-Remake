@@ -1,22 +1,13 @@
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('../config/cloudinary')
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const {
-    CLOUDINARY_CLOUD_NAME,
-    CLOUDINARY_API_KEY,
-    CLOUDINARY_API_SECRET,    
+const {  
     CLOUDINARY_UMKM,
     CLOUDINARY_PROFILE,
     CLOUDINARY_PENGADUAN,
     CLOUDINARY_BERITA
 } = require('../constant/cloudinary');
 const randomCharacter = require('./randomCharacter');
-
-cloudinary.config({
-    cloud_name: CLOUDINARY_CLOUD_NAME,
-    api_key: CLOUDINARY_API_KEY,
-    api_secret: CLOUDINARY_API_SECRET
-});
 
 const uploadCloudinary = (target) => {
     let folder;
@@ -47,9 +38,8 @@ const uploadCloudinary = (target) => {
                 return allowedFormats.includes(ext) ? ext : 'jpg';
             },
             public_id: (req, file) => {
-                const randomStr = randomCharacter(8);
-                const baseName = file.originalname.split('.')[0];
-                return `${baseName}-${randomStr}`;
+                const randomStr = randomCharacter(8);                
+                return randomStr;
             }
         }
     });
