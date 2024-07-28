@@ -2,7 +2,7 @@ const { getAllWarga, countWarga, getWargaById, checkNikById, checkByNik, createW
 const bcrypt = require('bcrypt');
 const randomCharacter = require('../../../utils/randomCharacter')
 const sendWhatsapp = require('../../../utils/sendWhatsapp')
-const messagePassword = require('../../../helper/messagePassword')
+const { messageCreate } = require('../../../helper/messagePassword')
 
 
 const getAllWargaService = async (page) => {
@@ -27,7 +27,7 @@ const createWargaService = async (nik, kk, namaLengkap, tanggalLahir, telepon) =
     const password = randomCharacter(8)
     const hashedPassword = await bcrypt.hash(password, 10)
     const warga = await createWarga(nik, kk, namaLengkap, tanggalLahir, hashedPassword, telepon)
-    const message = messagePassword(namaLengkap, nik, password)
+    const message = messageCreate(namaLengkap, nik, password)
     await sendWhatsapp(telepon, message)
     return warga
 }
