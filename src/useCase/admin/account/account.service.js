@@ -16,7 +16,7 @@ const authLogin = async (nik, password) => {
     if (!isValidPassword) {
         return new Error('Password salah')
     }
-    const token = jwt.sign({ pengurusDesaAnggotaId: pengurus.pengurusDesaAnggotaId }, JWT_SECRET,{expiresIn: '12h'})
+    const token = jwt.sign({ pengurusDesaAnggotaId: pengurus.pengurusDesaAnggotaId }, JWT_SECRET,{expiresIn: '24h'})
     await updateTokenPengurus(pengurus.pengurusDesaAnggotaId, token)
     return token
 }
