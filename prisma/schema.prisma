@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Berita {
+  beritaId  Int      @id @default(autoincrement())
+  judul     String
+  subjudul  String   @db.Text
+  tanggal   DateTime @default(now())
+  isi       String   @db.Text
+  gambar    String   @db.VarChar(255)
+  publikasi Boolean  @default(false)
+  prioritas Boolean  @default(false)
+
+  komentar Komentar[]
+}
+
+model CalonKetua {
+  calonKetuaId     Int    @id @default(autoincrement())
+  pemilihanKetuaId Int
+  wargaId          Int
+  deskripsi        String @db.Text  
+
+  pemilihanKetua PemilihanKetua? @relation(fields: [pemilihanKetuaId], references: [pemilihanKetuaId], onDelete: Cascade)
+  warga          Warga?          @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+  vote           Vote[]
+}
+
+model InformasiDesa {
+  informasiDesaId Int    @id @default(autoincrement())
+  namaDesa        String @db.VarChar(255)
+  deskripsi       String
+  lahanPertanian  Float  @default(0)
+  lahanPeternakan Float  @default(0)
+}
+
+model JenisUmkm {
+  jenisUmkmId   Int    @id @default(autoincrement())
+  namaJenisUmkm String @db.VarChar(255)
+
+  umkm Umkm[]
+}
+
+model Komentar {
+  komentarId Int      @id @default(autoincrement())
+  wargaId    Int
+  isi        String   @db.Text
+  tanggal    DateTime @default(now())
+  beritaId   Int
+
+  berita Berita? @relation(fields: [beritaId], references: [beritaId], onDelete: Cascade)
+  warga  Warga?  @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
+
+model PemilihanKetua {
+  pemilihanKetuaId Int      @id @default(autoincrement())
+  tanggalMulai     DateTime
+  tanggalSelesai   DateTime
+  judul            String   @db.VarChar(255)
+  deskripsi        String   @db.Text
+
+  calonKetua CalonKetua[]
+}
+
+model PengaduanMasyarakat {
+  pengaduanMasyarakatId Int      @id @default(autoincrement())
+  wargaId               Int
+  subjek                String   @db.VarChar(255)
+  isi                   String   @db.Text
+  foto                  String?  @db.VarChar(255)
+  tanggal               DateTime @default(now())
+
+  warga Warga? @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
+
+model PengurusDesaAnggota {
+  pengurusDesaAnggotaId Int     @id @default(autoincrement())
+  wargaId               Int
+  jabatan               String  @db.VarChar(255)
+  aksesAdmin            Boolean @default(false)
+  token                 String? @db.Text
+
+  warga Warga? @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
+
+model Umkm {
+  umkmId      Int     @id @default(autoincrement())
+  nama        String  @db.VarChar(255)
+  jenisUmkmId Int
+  deskripsi   String
+  gambar      String  @db.VarChar(255)
+  lokasi      String  @db.VarChar(255)
+  approve     Boolean @default(false)
+  status      Boolean @default(false)
+  wargaId     Int
+
+  jenisUmkm JenisUmkm? @relation(fields: [jenisUmkmId], references: [jenisUmkmId], onDelete: Cascade)
+  warga     Warga?     @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
+
+model Warga {
+  wargaId      Int      @id @default(autoincrement())
+  nik          String   @db.VarChar(25)
+  kk           String   @db.VarChar(25)
+  namaLengkap  String   @db.VarChar(255)
+  tanggalLahir DateTime
+  telepon      String?  @db.VarChar(25)
+  foto         String?  @db.VarChar(255)  
+  password     String   @db.Text
+  token        String?  @db.Text
+
+  calonKetua          CalonKetua[]
+  komentar            Komentar[]
+  pengaduanMasyarakat PengaduanMasyarakat[]
+  pengurusDesaAnggota PengurusDesaAnggota[]
+  umkm                Umkm[]
+  vote                Vote[]
+}
+
+model Vote {
+  voteId       Int @id @default(autoincrement())
+  wargaId      Int @unique
+  calonKetuaId Int 
+
+  calonKetua CalonKetua? @relation(fields: [calonKetuaId], references: [calonKetuaId], onDelete: Cascade)
+  warga      Warga?      @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
