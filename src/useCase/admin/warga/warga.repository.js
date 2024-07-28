@@ -23,7 +23,7 @@ const getWargaById = async (wargaId) => {
         },
         include: {
             umkm: true
-        },       
+        },
     })
     return warga
 }
@@ -50,7 +50,7 @@ const checkByNik = async (nik) => {
     return warga
 }
 
-const createWarga = async (nik, kk, namaLengkap, tanggalLahir, password) => {
+const createWarga = async (nik, kk, namaLengkap, tanggalLahir, password, telepon) => {
     const warga = await prisma.warga.create({
         data: {
             nik,
@@ -58,12 +58,13 @@ const createWarga = async (nik, kk, namaLengkap, tanggalLahir, password) => {
             namaLengkap,
             tanggalLahir,
             password,
+            telepon
         }
     })
     return warga
 }
 
-const editWarga = async (wargaId, nik, kk, namaLengkap, tanggalLahir) => {
+const editWarga = async (wargaId, nik, kk, namaLengkap, tanggalLahir, telepon) => {
     const warga = await prisma.warga.update({
         where: {
             wargaId
@@ -73,6 +74,7 @@ const editWarga = async (wargaId, nik, kk, namaLengkap, tanggalLahir) => {
             kk,
             namaLengkap,
             tanggalLahir,
+            telepon
         }
     })
     return warga
