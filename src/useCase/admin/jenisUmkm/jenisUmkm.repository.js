@@ -4,6 +4,11 @@ const getAllJenisUmkm = async () => {
     const umkm = await prisma.jenisUmkm.findMany({
         orderBy: {
             jenisUmkmId: 'desc'
+        },
+        select:{
+            jenisUmkmId: true,
+            namaJenisUmkm: true,
+            _count: true
         }
     })
     return umkm
