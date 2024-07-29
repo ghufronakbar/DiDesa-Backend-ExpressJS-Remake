@@ -6,6 +6,15 @@ const getAllPengaduanMasyarakat = async (page) => {
         take: 10,
         orderBy: {
             pengaduanMasyarakatId: 'desc'
+        },
+        include: {
+            warga: {
+                select: {
+                    wargaId: true,
+                    namaLengkap: true,
+                    telepon: true
+                }
+            }
         }
     })
     return pengaduan
@@ -20,8 +29,15 @@ const getPengaduanMasyarakatById = async (pengaduanMasyarakatId) => {
     const pengaduan = await prisma.pengaduanMasyarakat.findFirst({
         where: {
             pengaduanMasyarakatId
-        },include: {
-            warga: true            
+        },
+        include: {
+            warga: {
+                select: {
+                    wargaId: true,
+                    namaLengkap: true,
+                    telepon: true
+                }
+            }
         }
     })
     return pengaduan
