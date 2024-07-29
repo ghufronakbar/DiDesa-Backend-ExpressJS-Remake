@@ -2,6 +2,7 @@ const prisma = require('../src/db/prisma')
 
 const { checkGuest, createGuest } = require('./seedGuest')
 const { checkInformasi, createInformasi } = require('./seedInformasi')
+const { createJenisUmkm, checkJenisUmkm } = require('./seedJenisUmkm')
 const { checkPengurus, createPengurus } = require('./seedPengurus')
 const { checkWarga, createWarga } = require('./seedWarga')
 
@@ -11,6 +12,7 @@ const seeds = async () => {
         const pengurus = await checkPengurus()
         const informasi = await checkInformasi()
         const guest = await checkGuest()
+        const jenisUmkm = await checkJenisUmkm()
 
         let id
         if (warga) {
@@ -42,12 +44,17 @@ const seeds = async () => {
             console.log("Guest already exist")
         }
 
+        if (jenisUmkm) {
+            await createJenisUmkm()
+            console.log("JenisUmkm created")
+        } else {
+            console.log("JenisUmkm already exist")
+        }
 
     } catch (error) {
         console.log(error)
     }
 }
-
 seeds().then(() => {
     prisma.$disconnect()
 }).catch((error) => {
