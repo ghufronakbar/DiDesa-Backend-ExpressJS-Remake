@@ -8,7 +8,8 @@ const getAllJenisUmkm = async () => {
         select:{
             jenisUmkmId: true,
             namaJenisUmkm: true,
-            _count: true
+            _count: true,
+            umkm: true
         }
     })
     return umkm
@@ -18,6 +19,12 @@ const getJenisUmkmById = async (jenisUmkmId) => {
     const umkm = await prisma.jenisUmkm.findFirst({
         where: {
             jenisUmkmId
+        },
+        select:{
+            jenisUmkmId: true,
+            namaJenisUmkm: true,
+            _count: true,
+            umkm: true
         }
     })
     return umkm
