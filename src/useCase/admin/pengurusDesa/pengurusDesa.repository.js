@@ -13,7 +13,8 @@ const getAllPengurus = async (page) => {
                     wargaId: true,
                     namaLengkap: true,
                     nik: true,
-                    telepon: true
+                    telepon: true,
+                    foto: true                    
                 }
             }
         }
@@ -32,7 +33,8 @@ const getPengurusById = async (pengurusDesaAnggotaId) => {
                     wargaId: true,
                     namaLengkap: true,
                     nik: true,
-                    telepon: true
+                    telepon: true,
+                    foto: true
                 }
             }
         }
