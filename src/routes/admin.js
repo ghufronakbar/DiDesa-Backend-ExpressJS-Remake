@@ -11,6 +11,6 @@ router.use('/umkm',verificationAdmin ,require('../useCase/admin/umkm'));
 router.use('/jenis-umkm',verificationAdmin ,require('../useCase/admin/jenisUmkm'));
 router.use('/warga',verificationAdmin ,require('../useCase/admin/warga'));
 router.use('/pemilihan',verificationAdmin ,require('../useCase/admin/pemilihan'));
-
+router.use('/pengurus-desa',verificationAdmin ,require('../useCase/admin/pengurusDesa'));
 
 module.exports = router
