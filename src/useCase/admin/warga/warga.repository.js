@@ -6,6 +6,11 @@ const getAllWarga = async (page) => {
         take: 10,
         orderBy: {
             wargaId: 'desc'
+        },
+        where:{
+            NOT:{
+                wargaId: 0
+            }
         }
     })
     return warga
