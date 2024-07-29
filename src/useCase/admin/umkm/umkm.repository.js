@@ -14,7 +14,8 @@ const getAllUmkm = async (page) => {
                     wargaId: true,
                     nik: true,
                     foto: true,
-                    namaLengkap: true
+                    namaLengkap: true,
+                    telepon: true
                 }
             }
         }
@@ -40,6 +41,7 @@ const getUmkmById = async (umkmId) => {
                     nik: true,
                     namaLengkap: true,
                     foto: true,
+                    telepon: true
                 }
             }
         }
@@ -68,4 +70,16 @@ const approveUmkm = async (umkmId, approve) => {
     return umkm
 }
 
-module.exports = { getAllUmkm, countUmkm, getUmkmById, deleteUmkm, approveUmkm }
+const setInactiveUmkm = async (umkmId) => {
+    const umkm = await prisma.umkm.update({
+        where: {
+            umkmId
+        },
+        data: {
+            approve: false
+        }
+    })
+    return umkm
+}
+
+module.exports = { getAllUmkm, countUmkm, getUmkmById, deleteUmkm, approveUmkm, setInactiveUmkm }
