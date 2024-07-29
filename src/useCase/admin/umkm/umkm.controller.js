@@ -1,4 +1,5 @@
 const { getAllUmkmService, getUmkmByIdService, deleteUmkmService, approveUmkmService } = require('./umkm.service');
+const { PROFILE_DEFAULT } = require('../../../constant/imageDefault');
 
 const getAllUmkmController = async (req, res) => {
     const { page } = req.query
@@ -11,8 +12,12 @@ const getAllUmkmController = async (req, res) => {
             currentData: umkm.length,
             totalData: count
         }
+        for(const u of umkm){
+            u.warga.foto === null ? u.warga.foto = PROFILE_DEFAULT : u.warga.foto            
+        }
         return res.status(200).json({ status: 200, message: 'Data Umkm', pagination, data: umkm })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
     }
 }
@@ -24,8 +29,10 @@ const getUmkmByIdController = async (req, res) => {
         if (umkm instanceof Error) {
             return res.status(404).json({ status: 404, message: umkm.message })
         }
+        umkm.warga.foto === null ? umkm.warga.foto = PROFILE_DEFAULT : umkm.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Umkm', data: umkm })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
     }
 }
@@ -39,6 +46,7 @@ const deleteUmkmController = async (req, res) => {
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus umkm', data: umkm })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
     }
 }
@@ -59,6 +67,7 @@ const approveUmkmController = async (req, res) => {
         }
         return res.status(200).json({ status: 200, message, data: umkm })
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
     }
 }

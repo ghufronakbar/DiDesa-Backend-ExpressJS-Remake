@@ -6,6 +6,17 @@ const getAllUmkm = async (page) => {
         take: 10,
         orderBy: {
             umkmId: 'desc'
+        },
+        include:{
+            jenisUmkm: true,
+            warga:{
+                select:{
+                    wargaId: true,
+                    nik: true,
+                    foto: true,
+                    namaLengkap: true
+                }
+            }
         }
     })
     return umkm
