@@ -62,4 +62,5 @@ const createPengurusService = async (data) => {
     return pengurus
 }
 
+
 module.exports = { getAllPengurusService, getPengurusByIdService, setAdminAccessPengurusService, setJabatanPengurusService, deletePengurusService, createPengurusService }
