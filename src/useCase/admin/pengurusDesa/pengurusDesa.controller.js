@@ -13,7 +13,7 @@ const getAllPengurusController = async (req, res) => {
             totalData: count
         }
         for (const p of pengurus) {
-            p.foto == null ? p.foto = PROFILE_DEFAULT : p.foto
+            p.warga.foto == null ? p.warga.foto = PROFILE_DEFAULT : p.warga.foto
         }
         return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', pagination, data: pengurus })
     } catch (error) {
@@ -29,7 +29,7 @@ const getPengurusByIdController = async (req, res) => {
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }
-        pengurus.foto == null ? pengurus.foto = PROFILE_DEFAULT : pengurus.foto
+        pengurus.warga.foto == null ? pengurus.warga.foto = PROFILE_DEFAULT : pengurus.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
     } catch (error) {
         console.log(error)
