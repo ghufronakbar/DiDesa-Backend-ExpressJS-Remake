@@ -45,7 +45,13 @@ const setAdminAccessPengurusController = async (req, res) => {
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }
-        return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
+        let message = ''
+        if (aksesAdmin == true) {
+            message = 'Berhasil menambahkan akses admin'
+        } else if (aksesAdmin == false) {
+            message = 'Berhasil menghapus akses admin'
+        }
+        return res.status(200).json({ status: 200, message, data: pengurus })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
@@ -60,7 +66,7 @@ const setJabatanPengurusController = async (req, res) => {
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }
-        return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
+        return res.status(200).json({ status: 200, message: 'Berhasil mengubah jabatan', data: pengurus })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
@@ -69,12 +75,13 @@ const setJabatanPengurusController = async (req, res) => {
 
 const deletePengurusController = async (req, res) => {
     const { id } = req.params
+    console.log(id)
     try {
-        const pengurus = await deletePengurusService(id)
+        const pengurus = await deletePengurusService(parseInt(id))
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }
-        return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
+        return res.status(200).json({ status: 200, message: 'Berhasil menghapus data', data: pengurus })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
