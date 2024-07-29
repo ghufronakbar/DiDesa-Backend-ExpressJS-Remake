@@ -103,6 +103,14 @@ const getWargaById = async (wargaId) => {
     const warga = await prisma.warga.findFirst({
         where: {
             wargaId
+        },
+        include:{
+            pengurusDesaAnggota:{
+                select:{
+                    pengurusDesaAnggotaId: true,
+                    jabatan: true
+                }
+            }
         }
     })
     return warga
