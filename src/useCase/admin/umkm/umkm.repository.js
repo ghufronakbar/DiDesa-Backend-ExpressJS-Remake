@@ -76,7 +76,7 @@ const setInactiveUmkm = async (umkmId) => {
             umkmId
         },
         data: {
-            approve: false
+            status: false
         }
     })
     return umkm
