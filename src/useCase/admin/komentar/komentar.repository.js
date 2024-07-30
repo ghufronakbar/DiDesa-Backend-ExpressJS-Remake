@@ -6,6 +6,21 @@ const getAllKomentar = async (page) => {
         take: 10,
         orderBy: {
             komentarId: 'desc'
+        },
+        include: {
+            warga: {
+                select: {
+                    wargaId: true,
+                    nik: true,
+                    telepon: true,
+                }
+            },
+            berita: {
+                select: {
+                    beritaId: true,
+                    judul: true
+                }
+            }
         }
     })
     return komentar
@@ -21,10 +36,22 @@ const getKomentarById = async (komentarId) => {
     const komentar = await prisma.komentar.findFirst({
         where: {
             komentarId
-        },include: {
-            warga: true,
-            berita: true            
-        }        
+        },
+        include: {
+            warga: {
+                select: {
+                    wargaId: true,
+                    nik: true,
+                    telepon: true,
+                }
+            },
+            berita: {
+                select: {
+                    beritaId: true,
+                    judul: true
+                }
+            }
+        }
     })
     return komentar
 }
