@@ -9,13 +9,13 @@ const informasiDesa = async (req, res) => {
     }
 }
 
-const editInformasi =  async (req, res) => {
-    const { namaDesa, deskripsi, lahanPeternakan, lahanTanaman } = req.body
+const editInformasi = async (req, res) => {
+    const { namaDesa, deskripsi, lahanPertanian, lahanPeternakan } = req.body
     try {
-        if (!namaDesa || !deskripsi || !lahanPeternakan || !lahanTanaman) {
+        if (!namaDesa || !deskripsi || !lahanPertanian || !lahanPeternakan) {
             return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
         }
-        const edit = await editInformasiDesa(namaDesa, deskripsi, lahanPeternakan, lahanTanaman)
+        const edit = await editInformasiDesa(namaDesa, deskripsi, lahanPertanian, lahanPeternakan)
         return res.status(200).json({ status: 200, message: 'Informasi Desa', data: edit })
     } catch (error) {
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })

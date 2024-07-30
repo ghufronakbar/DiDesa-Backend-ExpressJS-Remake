@@ -5,13 +5,13 @@ const getInformasi = async () => {
     return informasi[0]
 }
 
-const editInformasi = async (namaDesa, deskripsi, lahanPeternakan, lahanTanaman) => {
+const editInformasi = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan) => {
     const edit = await prisma.informasiDesa.update({
         data: {
             namaDesa,
             deskripsi,
+            lahanPertanian,
             lahanPeternakan,
-            lahanTanaman
         }
     })
     return edit
