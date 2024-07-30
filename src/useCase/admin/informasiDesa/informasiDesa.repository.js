@@ -6,7 +6,7 @@ const getInformasi = async () => {
 }
 
 const editInformasi = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan) => {
-    const edit = await prisma.informasiDesa.update({
+    const edit = await prisma.informasiDesa.updateMany({
         data: {
             namaDesa,
             deskripsi,
