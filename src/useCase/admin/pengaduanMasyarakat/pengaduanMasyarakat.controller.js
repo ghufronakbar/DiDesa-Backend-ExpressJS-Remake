@@ -22,7 +22,7 @@ const getPengaduanByIdController = async (req, res) => {
     try {
         const pengaduan = await getPengaduanByIdService(parseInt(id))
         if (pengaduan instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengaduan.message })
+            return res.status(400).json({ status: 400, message: pengaduan.message })
         }
         return res.status(200).json({ status: 200, message: 'Data Pengaduan', data: pengaduan })
     } catch (error) {
@@ -35,7 +35,7 @@ const deletePengaduanController = async (req, res) => {
     try {
         const pengaduan = await deletePengaduanService(parseInt(id))
         if (pengaduan instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengaduan.message })
+            return res.status(400).json({ status: 400, message: pengaduan.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus pengaduan', data: pengaduan })
     } catch (error) {

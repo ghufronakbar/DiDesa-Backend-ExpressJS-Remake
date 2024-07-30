@@ -8,9 +8,11 @@ const getAllPemilihan = async () => {
         include: {
             _count: true,
             calonKetua: {
+                orderBy: {
+                    calonKetuaId: 'asc'
+                },
                 include: {
                     _count: true,
-
                     warga: {
                         select: {
                             wargaId: true,
@@ -35,6 +37,9 @@ const getPemilihanById = async (pemilihanKetuaId) => {
         include: {
             _count: true,
             calonKetua: {
+                orderBy: {
+                    calonKetuaId: 'asc'
+                },
                 include: {
                     _count: true,
                     warga: {
@@ -103,7 +108,7 @@ const createCalon = async (wargaId, pemilihanKetuaId, deskripsi) => {
 const editCalon = async (calonKetuaId, deskripsi) => {
     const calon = await prisma.calonKetua.update({
         where: {
-            calonKetuaId
+            calonKetuaId,
         },
         data: {
             deskripsi
@@ -130,6 +135,32 @@ const getWargaById = async (wargaId) => {
     return warga
 }
 
+const countPemilihanAfterToday = async () => {
+    const pemilihan = await prisma.pemilihanKetua.count({
+        where: {
+            tanggalMulai: {
+                gte: new Date()
+            },
+            tanggalSelesai: {
+                gte: new Date()
+            }
+        },
+    })
+    return pemilihan
+}
+
+const getPemilihanByCalonId = async (calonKetuaId) => {
+    const pemilihan = await prisma.calonKetua.findFirst({
+        where: {
+            calonKetuaId
+        },       
+    })
+    return pemilihan
+}
+
+
+
+
 module.exports = {
     getAllPemilihan,
     getPemilihanById,
@@ -139,5 +170,7 @@ module.exports = {
     createCalon,
     editCalon,
     deleteCalon,
-    getWargaById
+    getWargaById,
+    countPemilihanAfterToday,
+    getPemilihanByCalonId
 }

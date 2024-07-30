@@ -21,7 +21,7 @@ const getPemilihanByIdController = async (req, res) => {
     try {
         const pemilihan = await getAllPemilihanByIdService(parseInt(id))
         if (pemilihan instanceof Error) {
-            return res.status(404).json({ status: 404, message: pemilihan.message })
+            return res.status(400).json({ status: 400, message: pemilihan.message })
         }
         for(const p of pemilihan.calonKetua) {
             p.warga.foto == null ? p.warga.foto = PROFILE_DEFAULT : p.warga.foto
@@ -91,7 +91,7 @@ const editPemilihanController = async (req, res) => {
         }
         const pemilihan = await editPemilihanService(parseInt(id), judul, deskripsi, tanggalMulai, tanggalSelesai)
         if (pemilihan instanceof Error) {
-            return res.status(404).json({ status: 404, message: pemilihan.message })
+            return res.status(400).json({ status: 400, message: pemilihan.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil mengedit pemilihan', data: pemilihan })
     } catch (error) {
@@ -105,7 +105,7 @@ const deletePemilihanController = async (req, res) => {
     try {
         const pemilihan = await deletePemilihanService(parseInt(id))
         if (pemilihan instanceof Error) {
-            return res.status(404).json({ status: 404, message: pemilihan.message })
+            return res.status(400).json({ status: 400, message: pemilihan.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus pemilihan', data: pemilihan })
     } catch (error) {
@@ -146,7 +146,7 @@ const editCalonController = async (req, res) => {
         }
         const calon = await editCalonService(parseInt(id), deskripsi)
         if (calon instanceof Error) {
-            return res.status(404).json({ status: 404, message: calon.message })
+            return res.status(400).json({ status: 400, message: calon.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil mengedit calon', data: calon })
     } catch (error) {
@@ -160,7 +160,7 @@ const deleteCalonController = async (req, res) => {
     try {
         const calon = await deleteCalonService(parseInt(id))
         if (calon instanceof Error) {
-            return res.status(404).json({ status: 404, message: calon.message })
+            return res.status(400).json({ status: 400, message: calon.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus calon', data: calon })
     } catch (error) {

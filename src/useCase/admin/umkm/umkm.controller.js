@@ -27,7 +27,7 @@ const getUmkmByIdController = async (req, res) => {
     try {
         const umkm = await getUmkmByIdService(parseInt(id))
         if (umkm instanceof Error) {
-            return res.status(404).json({ status: 404, message: umkm.message })
+            return res.status(400).json({ status: 400, message: umkm.message })
         }
         umkm.warga.foto === null ? umkm.warga.foto = PROFILE_DEFAULT : umkm.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Umkm', data: umkm })
@@ -42,7 +42,7 @@ const deleteUmkmController = async (req, res) => {
     try {
         const umkm = await deleteUmkmService(parseInt(id))
         if (umkm instanceof Error) {
-            return res.status(404).json({ status: 404, message: umkm.message })
+            return res.status(400).json({ status: 400, message: umkm.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus umkm', data: umkm })
     } catch (error) {
@@ -63,7 +63,7 @@ const approveUmkmController = async (req, res) => {
         }
         const umkm = await approveUmkmService(parseInt(id), approve)
         if (umkm instanceof Error) {
-            return res.status(404).json({ status: 404, message: umkm.message })
+            return res.status(400).json({ status: 400, message: umkm.message })
         }
         return res.status(200).json({ status: 200, message, data: umkm })
     } catch (error) {

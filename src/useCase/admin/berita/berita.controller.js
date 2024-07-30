@@ -23,7 +23,7 @@ const beritaById = async (req, res) => {
     try {
         const berita = await showBeritaById(parseInt(id))
         if (berita instanceof Error) {
-            return res.status(404).json({ status: 404, message: berita.message })
+            return res.status(400).json({ status: 400, message: berita.message })
         }
         return res.status(200).json({ status: 200, message: 'Berita', data: berita })
     } catch (error) {
@@ -62,7 +62,7 @@ const editBeritaById = async (req, res) => {
         if (gambar) data.gambar = gambar
         const berita = await editBerita(parseInt(id), data)
         if (berita instanceof Error) {
-            return res.status(404).json({ status: 404, message: berita.message })
+            return res.status(400).json({ status: 400, message: berita.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil mengedit berita', data: berita })
     } catch (error) {
@@ -76,7 +76,7 @@ const deleteBerita = async (req, res) => {
     try {
         const berita = await deleteBeritaById(parseInt(id))
         if (berita instanceof Error) {
-            return res.status(404).json({ status: 404, message: berita.message })
+            return res.status(400).json({ status: 400, message: berita.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus berita', data: berita })
     } catch (error) {
@@ -97,7 +97,7 @@ const editPublikasi = async (req, res) => {
         }
         const berita = await editPublikasiById(parseInt(id), publikasi)
         if (berita instanceof Error) {
-            return res.status(404).json({ status: 404, message: berita.message })
+            return res.status(400).json({ status: 400, message: berita.message })
         }
         return res.status(200).json({ status: 200, message, data: berita })
     } catch (error) {
@@ -118,7 +118,7 @@ const editPrioritas = async (req, res) => {
         }
         const berita = await editPrioritasById(parseInt(id), prioritas)
         if (berita instanceof Error) {
-            return res.status(404).json({ status: 404, message: berita.message })
+            return res.status(400).json({ status: 400, message: berita.message })
         }
         return res.status(200).json({ status: 200, message, data: berita })
     } catch (error) {

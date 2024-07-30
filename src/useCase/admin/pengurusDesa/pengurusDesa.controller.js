@@ -29,7 +29,7 @@ const getPengurusByIdController = async (req, res) => {
         const pengurus = await getPengurusByIdService(parseInt(id))
         console.log(pengurus)
         if (pengurus instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengurus.message })
+            return res.status(400).json({ status: 400, message: pengurus.message })
         }
         pengurus.warga.foto == null ? pengurus.warga.foto = PROFILE_DEFAULT : pengurus.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
@@ -45,7 +45,7 @@ const setAdminAccessPengurusController = async (req, res) => {
     try {
         const pengurus = await setAdminAccessPengurusService(parseInt(id), aksesAdmin)
         if (pengurus instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengurus.message })
+            return res.status(400).json({ status: 400, message: pengurus.message })
         }
         let message = ''
         if (aksesAdmin == true) {
@@ -66,7 +66,7 @@ const setJabatanPengurusController = async (req, res) => {
     try {
         const pengurus = await setJabatanPengurusService(parseInt(id), jabatan)
         if (pengurus instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengurus.message })
+            return res.status(400).json({ status: 400, message: pengurus.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil mengubah jabatan', data: pengurus })
     } catch (error) {
@@ -81,7 +81,7 @@ const deletePengurusController = async (req, res) => {
     try {
         const pengurus = await deletePengurusService(parseInt(id))
         if (pengurus instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengurus.message })
+            return res.status(400).json({ status: 400, message: pengurus.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus data', data: pengurus })
     } catch (error) {
@@ -99,7 +99,7 @@ const createPengurusController = async (req, res) => {
         const data = { wargaId: parseInt(wargaId), jabatan }
         const pengurus = await createPengurusService(data)
         if (pengurus instanceof Error) {
-            return res.status(404).json({ status: 404, message: pengurus.message })
+            return res.status(400).json({ status: 400, message: pengurus.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menambahkan data', data: pengurus })
     } catch (error) {

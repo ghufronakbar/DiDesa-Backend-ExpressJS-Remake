@@ -26,7 +26,7 @@ const getKomentarByIdController = async (req, res) => {
     try {
         const komentar = await getKomentarByIdService(parseInt(id))
         if (komentar instanceof Error) {
-            return res.status(404).json({ status: 404, message: komentar.message })
+            return res.status(400).json({ status: 400, message: komentar.message })
         }
         komentar.warga.foto === null ? komentar.warga.foto = PROFILE_DEFAULT : komentar.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Komentar', data: komentar })
@@ -40,7 +40,7 @@ const deleteKomentarController = async (req, res) => {
     try {
         const komentar = await deleteKomentarService(parseInt(id))
         if (komentar instanceof Error) {
-            return res.status(404).json({ status: 404, message: komentar.message })
+            return res.status(400).json({ status: 400, message: komentar.message })
         }
         return res.status(200).json({ status: 200, message: 'Berhasil menghapus komentar', data: komentar })
     } catch (error) {
