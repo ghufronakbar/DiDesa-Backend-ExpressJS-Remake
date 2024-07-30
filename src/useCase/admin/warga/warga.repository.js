@@ -7,8 +7,8 @@ const getAllWarga = async (page) => {
         orderBy: {
             wargaId: 'desc'
         },
-        where:{
-            NOT:{
+        where: {
+            NOT: {
                 wargaId: 0
             }
         }
@@ -94,4 +94,17 @@ const deleteWarga = async (wargaId) => {
     return warga
 }
 
-module.exports = { getAllWarga, countWarga, getWargaById, checkNikById, checkByNik, createWarga, editWarga, deleteWarga }
+const getIdWarga = async () => {
+    const warga = await prisma.warga.findMany({
+        orderBy: {
+            namaLengkap: 'desc'
+        },
+        select: {
+            wargaId: true,
+            namaLengkap: true
+        }
+    })
+    return warga
+}
+
+module.exports = { getAllWarga, countWarga, getWargaById, checkNikById, checkByNik, createWarga, editWarga, deleteWarga, getIdWarga }

@@ -1,4 +1,4 @@
-const { getAllWarga, countWarga, getWargaById, checkNikById, checkByNik, createWarga, editWarga, deleteWarga } = require('./warga.repository');
+const { getAllWarga, countWarga, getWargaById, checkNikById, checkByNik, createWarga, editWarga, deleteWarga, getIdWarga } = require('./warga.repository');
 const bcrypt = require('bcrypt');
 const randomCharacter = require('../../../utils/randomCharacter')
 const sendWhatsapp = require('../../../utils/sendWhatsapp')
@@ -46,7 +46,7 @@ const deleteWargaService = async (wargaId) => {
     if (!wargaCheck) {
         return new Error('Warga tidak ditemukan')
     }
-    if(wargaCheck.foto){
+    if (wargaCheck.foto) {
         const removeImage = await removeCloudinary(wargaCheck.foto, "profile")
         if (removeImage instanceof Error) {
             return removeImage
@@ -56,4 +56,9 @@ const deleteWargaService = async (wargaId) => {
     return warga
 }
 
-module.exports = { getAllWargaService, getWargaByIdService, createWargaService, editWargaService, deleteWargaService }
+const getIdWargaService = async () => {
+    const warga = await getIdWarga();
+    return warga
+}
+
+module.exports = { getAllWargaService, getWargaByIdService, createWargaService, editWargaService, deleteWargaService, getIdWargaService }

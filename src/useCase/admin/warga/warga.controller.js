@@ -1,4 +1,4 @@
-const { getAllWargaService, getWargaByIdService, createWargaService, editWargaService, deleteWargaService } = require('./warga.service');
+const { getAllWargaService, getWargaByIdService, createWargaService, editWargaService, deleteWargaService, getIdWargaService } = require('./warga.service');
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault');
 
 const getAllWargaController = async (req, res) => {
@@ -92,10 +92,21 @@ const deleteWargaController = async (req, res) => {
     }
 }
 
+const getIdWargaController = async (req, res) => {
+    try {
+        const warga = await getIdWargaService()
+        return res.status(200).json({ status: 200, message: 'Data Warga', data: warga })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
 module.exports = {
     getAllWargaController,
     getWargaByIdController,
     createWargaController,
     editWargaController,
-    deleteWargaController
+    deleteWargaController,
+    getIdWargaController
 }
