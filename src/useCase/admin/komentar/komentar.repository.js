@@ -19,7 +19,8 @@ const getAllKomentar = async (page) => {
             berita: {
                 select: {
                     beritaId: true,
-                    judul: true
+                    judul: true,
+                    gambar: true
                 }
             }
         }
@@ -44,13 +45,14 @@ const getKomentarById = async (komentarId) => {
                     wargaId: true,
                     nik: true,
                     telepon: true,
-                    foto: true
+                    foto: true,                    
                 }
             },
             berita: {
                 select: {
                     beritaId: true,
-                    judul: true
+                    judul: true,
+                    gambar: true
                 }
             }
         }
