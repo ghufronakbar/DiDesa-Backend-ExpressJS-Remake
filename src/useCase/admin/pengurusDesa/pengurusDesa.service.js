@@ -55,9 +55,9 @@ const createPengurusService = async (data) => {
     if (!warga) {
         return new Error('Warga Tidak Ditemukan')
     }
-    if(warga.pengurusDesaAnggota.pengurusDesaAnggotaId){
+    if(warga && warga?.pengurusDesaAnggota?.pengurusDesaAnggotaId){
         return new Error('Warga Sudah Menjadi Pengurus Desa')
-    }
+    }    
     const pengurus = await createPengurus(data)
     return pengurus
 }

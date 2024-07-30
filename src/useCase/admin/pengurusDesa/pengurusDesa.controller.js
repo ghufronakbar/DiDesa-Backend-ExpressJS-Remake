@@ -1,4 +1,5 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
+const { warga } = require('../../../db/prisma')
 const { getAllPengurusService, getPengurusByIdService, setAdminAccessPengurusService, setJabatanPengurusService, deletePengurusService, createPengurusService } = require('./pengurusDesa.service')
 
 const getAllPengurusController = async (req, res) => {
@@ -89,7 +90,7 @@ const deletePengurusController = async (req, res) => {
 }
 
 const createPengurusController = async (req, res) => {
-    const { wargaId, jabatan } = req.body
+    const { wargaId, jabatan } = req.body    
     try {
         if (!wargaId || !jabatan) {
             return res.status(400).json({ status: 400, message: 'Data wajib diisi' })
@@ -99,7 +100,7 @@ const createPengurusController = async (req, res) => {
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }
-        return res.status(200).json({ status: 200, message: 'Data Pengurus Desa', data: pengurus })
+        return res.status(200).json({ status: 200, message: 'Berhasil menambahkan data', data: pengurus })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })

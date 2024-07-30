@@ -86,7 +86,7 @@ model PengaduanMasyarakat {
 
 model PengurusDesaAnggota {
   pengurusDesaAnggotaId Int     @id @default(autoincrement())
-  wargaId               Int
+  wargaId               Int     @unique
   jabatan               String  @db.VarChar(255)
   aksesAdmin            Boolean @default(false)
   token                 String? @db.Text
@@ -123,7 +123,7 @@ model Warga {
   calonKetua          CalonKetua[]
   komentar            Komentar[]
   pengaduanMasyarakat PengaduanMasyarakat[]
-  pengurusDesaAnggota PengurusDesaAnggota[]
+  pengurusDesaAnggota PengurusDesaAnggota?
   umkm                Umkm[]
   vote                Vote[]
 }
