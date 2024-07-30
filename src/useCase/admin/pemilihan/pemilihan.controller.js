@@ -16,6 +16,13 @@ const getAllPemilihanController = async (req, res) => {
                 p.status = 'Sedang Berlangsung'
             }
         }
+        for (const d of pemilihan) {
+            d.calonKetua.sort((a, b) => b._count.vote - a._count.vote);
+            d.calonKetua.forEach((calonKetua, index) => {
+                calonKetua.rank = index + 1;
+            });
+        }
+
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
     } catch (error) {
         console.log(error)
@@ -40,6 +47,11 @@ const getPemilihanByIdController = async (req, res) => {
         } else {
             pemilihan.status = 'Sedang Berlangsung'
         }
+        pemilihan.calonKetua.sort((a, b) => b._count.vote - a._count.vote);
+        pemilihan.calonKetua.forEach((calonKetua, index) => {
+            calonKetua.rank = index + 1;
+        });
+
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
     } catch (error) {
         console.log(error)
