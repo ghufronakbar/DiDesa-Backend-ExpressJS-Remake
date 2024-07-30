@@ -102,6 +102,11 @@ const getIdWarga = async () => {
         select: {
             wargaId: true,
             namaLengkap: true
+        },
+        where: {
+            NOT: {
+                wargaId: 0
+            }
         }
     })
     return warga
