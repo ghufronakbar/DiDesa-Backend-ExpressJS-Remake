@@ -1,4 +1,5 @@
 const { getAllKomentarService, deleteKomentarService, getKomentarByIdService } = require('./komentar.service')
+const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 
 const getAllKomentarController = async (req, res) => {
     const { page } = req.query
@@ -10,6 +11,9 @@ const getAllKomentarController = async (req, res) => {
             totalPage: Math.ceil(count / 10),
             currentData: komentar.length,
             totalData: count
+        }
+        for(const k of komentar) {
+            k.warga.foto === null ? k.warga.foto = PROFILE_DEFAULT : k.warga.foto
         }
         return res.status(200).json({ status: 200, message: 'Data Komentar', pagination, data: komentar })
     } catch (error) {
@@ -24,6 +28,7 @@ const getKomentarByIdController = async (req, res) => {
         if (komentar instanceof Error) {
             return res.status(404).json({ status: 404, message: komentar.message })
         }
+        komentar.warga.foto === null ? komentar.warga.foto = PROFILE_DEFAULT : komentar.warga.foto
         return res.status(200).json({ status: 200, message: 'Data Komentar', data: komentar })
     } catch (error) {
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
