@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', getAllWargaController)
+router.get('/all', getIdWargaController)
 router.get('/:id', getWargaByIdController)
 router.post('/', createWargaController)
 router.put('/:id', editWargaController)
 router.delete('/:id', deleteWargaController)
-router.get('/all', getIdWargaController)
 
 module.exports = router
