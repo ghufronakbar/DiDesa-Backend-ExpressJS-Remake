@@ -13,7 +13,8 @@ const getAllKomentar = async (page) => {
                     wargaId: true,
                     nik: true,
                     telepon: true,
-                    foto: true
+                    foto: true,
+                    namaLengkap: true
                 }
             },
             berita: {
@@ -45,7 +46,8 @@ const getKomentarById = async (komentarId) => {
                     wargaId: true,
                     nik: true,
                     telepon: true,
-                    foto: true,                    
+                    foto: true,    
+                    namaLengkap: true                
                 }
             },
             berita: {
