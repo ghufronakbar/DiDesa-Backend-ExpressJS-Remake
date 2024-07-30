@@ -8,6 +8,13 @@ const getAllPemilihanController = async (req, res) => {
             for (const c of p.calonKetua) {
                 c.warga.foto == null ? c.warga.foto = PROFILE_DEFAULT : c.warga.foto
             }
+            if (p.tanggalMulai > new Date()) {
+                p.status = 'Belum Dimulai'
+            } else if (p.tanggalSelesai < new Date()) {
+                p.status = 'Selesai'
+            } else {
+                p.status = 'Sedang Berlangsung'
+            }
         }
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
     } catch (error) {
@@ -25,6 +32,13 @@ const getPemilihanByIdController = async (req, res) => {
         }
         for (const p of pemilihan.calonKetua) {
             p.warga.foto == null ? p.warga.foto = PROFILE_DEFAULT : p.warga.foto
+        }
+        if (pemilihan.tanggalMulai > new Date()) {
+            pemilihan.status = 'Belum Dimulai'
+        } else if (pemilihan.tanggalSelesai < new Date()) {
+            pemilihan.status = 'Selesai'
+        } else {
+            pemilihan.status = 'Sedang Berlangsung'
         }
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
     } catch (error) {
