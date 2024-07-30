@@ -89,11 +89,11 @@ const getCountPengurusAdmin = async () => {
     return pengurus
 }
 
-const createPengurus = async (wargaId, jabatan) => {
+const createPengurus = async (data) => {
     const pengurus = await prisma.pengurusDesaAnggota.create({
         data: {
-            wargaId,
-            jabatan
+            wargaId: data.wargaId,
+            jabatan: data.jabatan
         }
     })
     return pengurus
