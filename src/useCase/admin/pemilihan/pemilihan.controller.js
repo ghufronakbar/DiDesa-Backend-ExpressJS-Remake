@@ -1,14 +1,14 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
-const { getAllPemilihanService, getAllPemilihanByIdService, createPemilihanService, editPemilihanService, deletePemilihanService, createCalonService, editCalonService, deleteCalonService } = require('./pemilihan.service')
+const { getAllPemilihanService, getAllPemilihanByIdService, createPemilihanService, editPemilihanService, deletePemilihanService, createCalonService, editCalonService, deleteCalonService, getPemilihanByCalonIdService } = require('./pemilihan.service')
 
 const getAllPemilihanController = async (req, res) => {
     try {
         const pemilihan = await getAllPemilihanService()
-        for(const p of pemilihan) {
-            for(const c of p.calonKetua) {
+        for (const p of pemilihan) {
+            for (const c of p.calonKetua) {
                 c.warga.foto == null ? c.warga.foto = PROFILE_DEFAULT : c.warga.foto
             }
-        }            
+        }
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
     } catch (error) {
         console.log(error)
@@ -23,7 +23,7 @@ const getPemilihanByIdController = async (req, res) => {
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }
-        for(const p of pemilihan.calonKetua) {
+        for (const p of pemilihan.calonKetua) {
             p.warga.foto == null ? p.warga.foto = PROFILE_DEFAULT : p.warga.foto
         }
         return res.status(200).json({ status: 200, message: 'Data Pemilihan', data: pemilihan })
@@ -169,4 +169,20 @@ const deleteCalonController = async (req, res) => {
     }
 }
 
-module.exports = { getAllPemilihanController, getPemilihanByIdController, createPemilihanController, editPemilihanController, deletePemilihanController, createCalonController, editCalonController, deleteCalonController }
+const getPemilihanByCalonIdController = async (req, res) => {
+    const { id } = req.params
+    try {
+        const calon = await getPemilihanByCalonIdService(parseInt(id))
+        if (calon instanceof Error) {
+            return res.status(400).json({ status: 400, message: calon.message })
+        }
+        return res.status(200).json({ status: 200, message: 'Data Calon', data: calon })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
+
+
+module.exports = { getAllPemilihanController, getPemilihanByIdController, createPemilihanController, editPemilihanController, deletePemilihanController, createCalonController, editCalonController, deleteCalonController, getPemilihanByCalonIdController }

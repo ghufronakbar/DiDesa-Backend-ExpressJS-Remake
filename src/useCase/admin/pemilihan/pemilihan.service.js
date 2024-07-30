@@ -123,4 +123,12 @@ const deleteCalonService = async (calonKetuaId) => {
     return calon
 }
 
-module.exports = { getAllPemilihanService, getAllPemilihanByIdService, createPemilihanService, editPemilihanService, deletePemilihanService, createCalonService, editCalonService, deleteCalonService }
+const getPemilihanByCalonIdService = async (calonKetuaId) => {
+    const pemilihan = await getPemilihanByCalonId(calonKetuaId)
+    if (!pemilihan) {
+        return new Error('Calon Tidak Ditemukan')
+    }
+    return pemilihan
+}
+
+module.exports = { getAllPemilihanService, getAllPemilihanByIdService, createPemilihanService, editPemilihanService, deletePemilihanService, createCalonService, editCalonService, deleteCalonService, getPemilihanByCalonIdService }
