@@ -24,9 +24,10 @@ const getAllPengurusController = async (req, res) => {
 }
 
 const getPengurusByIdController = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params    
     try {
         const pengurus = await getPengurusByIdService(parseInt(id))
+        console.log(pengurus)
         if (pengurus instanceof Error) {
             return res.status(404).json({ status: 404, message: pengurus.message })
         }

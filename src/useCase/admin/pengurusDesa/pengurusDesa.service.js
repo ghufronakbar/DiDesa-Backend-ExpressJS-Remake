@@ -8,6 +8,9 @@ const getAllPengurusService = async (page) => {
 
 const getPengurusByIdService = async (pengurusDesaAnggotaId) => {
     const pengurus = await getPengurusById(pengurusDesaAnggotaId)
+    if (!pengurus) {
+        return new Error('Pengurus Desa Tidak Ditemukan')
+    }
     return pengurus
 }
 
@@ -55,9 +58,9 @@ const createPengurusService = async (data) => {
     if (!warga) {
         return new Error('Warga Tidak Ditemukan')
     }
-    if(warga && warga?.pengurusDesaAnggota?.pengurusDesaAnggotaId){
+    if (warga && warga?.pengurusDesaAnggota?.pengurusDesaAnggotaId) {
         return new Error('Warga Sudah Menjadi Pengurus Desa')
-    }    
+    }
     const pengurus = await createPengurus(data)
     return pengurus
 }
