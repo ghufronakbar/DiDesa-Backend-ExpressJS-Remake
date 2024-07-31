@@ -9,7 +9,8 @@ const {
     deleteCalon,
     getWargaById,
     countPemilihanAfterToday,
-    getPemilihanByCalonId
+    getPemilihanByCalonId,    
+    countPemilihanByWargaAndPemilihanKetuaId
 } = require('./pemilihan.repository')
 
 const getAllPemilihanService = async () => {
@@ -78,6 +79,10 @@ const createCalonService = async (wargaId, pemilihanKetuaId, deskripsi) => {
     const checkWarga = await getWargaById(wargaId)
     if (!checkWarga) {
         return new Error('Warga Tidak Ditemukan')
+    }
+    const checkExist = await countPemilihanByWargaAndPemilihanKetuaId(wargaId, pemilihanKetuaId)
+    if(checkExist > 0) {
+        return new Error('Calon Sudah Berpartisipasi pada Pemilihan Ini')
     }
     const calon = await createCalon(wargaId, pemilihanKetuaId, deskripsi)
     return calon

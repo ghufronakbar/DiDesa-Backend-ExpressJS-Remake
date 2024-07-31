@@ -153,13 +153,20 @@ const getPemilihanByCalonId = async (calonKetuaId) => {
     const pemilihan = await prisma.calonKetua.findFirst({
         where: {
             calonKetuaId
-        },       
+        },
     })
     return pemilihan
 }
 
-
-
+const countPemilihanByWargaAndPemilihanKetuaId = async (wargaId, pemilihanKetuaId) => {
+    const pemilihan = await prisma.calonKetua.count({
+        where: {
+            wargaId,
+            pemilihanKetuaId
+        },
+    })
+    return pemilihan
+}
 
 module.exports = {
     getAllPemilihan,
@@ -172,5 +179,6 @@ module.exports = {
     deleteCalon,
     getWargaById,
     countPemilihanAfterToday,
-    getPemilihanByCalonId
+    getPemilihanByCalonId,
+    countPemilihanByWargaAndPemilihanKetuaId
 }
