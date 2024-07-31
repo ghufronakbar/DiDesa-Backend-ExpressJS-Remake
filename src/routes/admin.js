@@ -1,6 +1,6 @@
 const express = require('express');
-const { verificationAdmin } = require('../middleware/adminVerification');
 const router = express.Router();
+const { verificationAdmin } = require('../middleware/adminVerification');
 
 router.use('/account', require('../useCase/admin/account'));
 router.use('/informasi-desa',verificationAdmin ,require('../useCase/admin/informasiDesa'));

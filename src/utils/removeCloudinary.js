@@ -7,7 +7,6 @@ const extractPublicId = (url) => {
     return publicId;
 };
 
-// Fungsi untuk menghapus gambar di Cloudinary
 const removeCloudinary = async (url, target) => {
     try {        
         const validTargets = ['umkm', 'berita', 'profile', 'pengaduan'];
