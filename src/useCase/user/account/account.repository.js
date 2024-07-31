@@ -35,6 +35,7 @@ const getProfile = async (wargaId) => {
             tanggalLahir: true,
             foto: true,
             pengaduanMasyarakat: true,
+            password: true,
             umkm: {
                 select: {
                     umkmId: true,

@@ -6,7 +6,7 @@ const removeCloudinary = require('../../../utils/removeCloudinary')
 const afterTenMinutes = require('../../../utils/afterTenMinutes')
 const randomCharacter = require('../../../utils/randomCharacter')
 const sendWhatsapp = require('../../../utils/sendWhatsapp')
-const { messageLinkVerify,messagePasswordReset } = require('../../../helper/messagePassword')
+const { messageLinkVerify, messagePasswordReset } = require('../../../helper/messagePassword')
 
 const loginService = async (nik, password) => {
     const account = await getAccount(nik)
@@ -84,13 +84,13 @@ const forgotPasswordService = async (nik, baseUrl) => {
 
 const confirmForgotPasswordService = async (token) => {
     const now = new Date();
-    now.setHours(now.getHours() + 7);    
+    now.setHours(now.getHours() + 7);
 
     const check = await validateToken(token)
     if (!check) {
         return new Error('Link Tidak Valid')
     }
-    if(check.expired < now) {
+    if (check.expired < now) {
         return new Error('Link Telah Kadaluarsa')
     }
     if (check.used === true) {
@@ -105,4 +105,24 @@ const confirmForgotPasswordService = async (token) => {
     return set
 }
 
-module.exports = { loginService, profileService, updatePictureService, deletePictureService, forgotPasswordService, confirmForgotPasswordService }
+const resetPasswordService = async (wargaId, newPassword, oldPassword, confirmPassword) => {
+    const acc = await getProfile(wargaId)
+    if (!acc) {
+        return new Error('Akun Tidak Ditemukan')
+    }
+    if (newPassword !== confirmPassword) {
+        return new Error('Konfirmasi Password Tidak Sesuai')
+    }
+    if (newPassword.length < 8) {
+        return new Error('Password Minimal 8 Karakter')
+    }
+    const check = await bcrypt.compare(oldPassword, acc.password)
+    if (!check) {
+        return new Error('Password Lama Tidak Sesuai')
+    }
+    const hashed = await bcrypt.hash(newPassword, 10)
+    const update = await updatePassword(wargaId, hashed)
+    return update
+}
+
+module.exports = { loginService, profileService, updatePictureService, deletePictureService, forgotPasswordService, confirmForgotPasswordService, resetPasswordService }
