@@ -1,5 +1,5 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
-const { loginService, profileService, updatePictureService, deletePictureService } = require('./account.service')
+const { loginService, profileService, updatePictureService, deletePictureService, forgotPasswordService, confirmForgotPasswordService } = require('./account.service')
 
 const loginController = async (req, res) => {
     const { nik, password } = req.body
@@ -76,4 +76,36 @@ const deletePictureController = async (req, res) => {
     }
 }
 
-module.exports = { loginController, profileController, updatePictureController, deletePictureController }
+const forgotPasswordController = async (req, res) => {
+    const { nik } = req.body
+    const baseUrl = `${req.protocol}://${req.get('host')}`;
+    try {
+        if (!nik) {
+            return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
+        }
+        const forgotPassword = await forgotPasswordService(nik, baseUrl)
+        if (forgotPassword instanceof Error) {
+            return res.status(400).json({ status: 400, message: forgotPassword.message })
+        }
+        return res.status(200).json({ status: 200, message: 'Berhasil Mengirim Link Lupa Password', data: forgotPassword })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
+const confirmForgotPasswordController = async (req, res) => {
+    const { token } = req.params
+    try {
+        const reset = await confirmForgotPasswordService(token)
+        if (reset instanceof Error) {
+            return res.status(400).send(reset.message)
+        }
+        return res.status(200).send('Berhasil mengatur ulang password, check Whatsapp anda')
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send('Ada Kesalahan Sistem')
+    }
+}
+
+module.exports = { loginController, profileController, updatePictureController, deletePictureController, forgotPasswordController, confirmForgotPasswordController }

@@ -19,5 +19,5 @@ app.use('/api/user',require('./routes/user'));
 
 
 app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server started on port ${PORT} ⚡`);
+    console.log(`⚡️[server]: Server started on port ${PORT} ⚡`);    
 });

@@ -69,4 +69,60 @@ const updatePicture = async (wargaId, foto) => {
     return update
 }
 
-module.exports = { getAccount, updateToken, getProfile, updatePicture }
+const createForgotPassword = async (wargaId, token, expired) => {
+    const forgot = await prisma.forgotPassword.create({
+        data: {
+            wargaId,
+            token,
+            expired
+        }
+    })
+}
+
+const getForgotPassword = async (wargaId, time) => {
+    const forgot = await prisma.forgotPassword.count({
+        where: {
+            AND: [
+                { wargaId },
+                { expired: { lte: time } }
+            ]
+        }
+    })
+    return forgot
+}
+
+const validateToken = async (token) => {
+    const validate = await prisma.forgotPassword.findFirst({
+        where: {
+            token
+        }
+    })
+    return validate
+}
+
+const setUsedToken = async (token) => {
+    const update = await prisma.forgotPassword.updateMany({
+        where: {
+            token
+        },
+        data: {
+            used: true
+        }
+    })
+    return update
+}
+
+const updatePassword = async (wargaId, password) => {
+    const update = await prisma.warga.update({
+        where: {
+            wargaId
+        },
+        data: {
+            password
+        }
+    })
+    return update
+}
+
+
+module.exports = { getAccount, updateToken, getProfile, updatePicture, createForgotPassword, getForgotPassword, validateToken, setUsedToken, updatePassword }

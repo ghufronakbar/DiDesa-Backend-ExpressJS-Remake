@@ -30,7 +30,7 @@ model CalonKetua {
   calonKetuaId     Int    @id @default(autoincrement())
   pemilihanKetuaId Int
   wargaId          Int
-  deskripsi        String @db.Text  
+  deskripsi        String @db.Text
 
   pemilihanKetua PemilihanKetua? @relation(fields: [pemilihanKetuaId], references: [pemilihanKetuaId], onDelete: Cascade)
   warga          Warga?          @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
@@ -111,12 +111,12 @@ model Umkm {
 
 model Warga {
   wargaId      Int      @id @default(autoincrement())
-  nik          String   @db.VarChar(25)
+  nik          String   @unique @db.VarChar(25)
   kk           String   @db.VarChar(25)
   namaLengkap  String   @db.VarChar(255)
   tanggalLahir DateTime
   telepon      String?  @db.VarChar(25)
-  foto         String?  @db.VarChar(255)  
+  foto         String?  @db.VarChar(255)
   password     String   @db.Text
   token        String?  @db.Text
 
@@ -131,8 +131,16 @@ model Warga {
 model Vote {
   voteId       Int @id @default(autoincrement())
   wargaId      Int @unique
-  calonKetuaId Int 
+  calonKetuaId Int
 
   calonKetua CalonKetua? @relation(fields: [calonKetuaId], references: [calonKetuaId], onDelete: Cascade)
   warga      Warga?      @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
+}
+
+model ForgotPassword {
+  forgotPasswordId Int      @id @default(autoincrement())
+  wargaId          Int
+  token            String   @db.Text
+  expired          DateTime
+  used             Boolean  @default(false)
 }
