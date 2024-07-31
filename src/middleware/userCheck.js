@@ -3,7 +3,8 @@ const { JWT_SECRET } = require('../constant')
 
 const userCheck = async (req, res, next) => {
     let isLoggedIn = false
-    req.decoded = { isLoggedIn }
+    let wargaId = 0
+    req.decoded = { isLoggedIn, wargaId }
     try {
         const bearerToken = req.headers.authorization
         if (!bearerToken) {                        

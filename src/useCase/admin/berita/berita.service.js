@@ -25,7 +25,7 @@ const editBerita = async (id, data) => {
     if (!beritaId) {
         return new Error('Berita tidak ditemukan')
     }
-    if (data.gambarl && beritaId.gambar) {
+    if (data.gambar && beritaId.gambar) {
         const removeImage = await removeCloudinary(beritaId.gambar, "berita")
         if (removeImage instanceof Error) {
             return removeImage

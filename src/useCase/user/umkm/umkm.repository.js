@@ -70,4 +70,69 @@ const getJenisUmkm = async () => {
     return jenisUmkm
 }
 
-module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm }
+const getJenisUmkmById = async (jenisUmkmId) => {
+    const umkm = await prisma.jenisUmkm.findFirst({
+        where: {
+            jenisUmkmId
+        }
+    })
+    return umkm
+}
+
+const createUmkm = async (nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId) => {
+    const umkm = await prisma.umkm.create({
+        data: {
+            nama,
+            deskripsi,
+            lokasi,
+            gambar,
+            jenisUmkmId,
+            wargaId
+        }
+    })
+    return umkm
+}
+
+const getUmkmById = async (umkmId) => {
+    const umkm = await prisma.umkm.findFirst({
+        where: {
+            umkmId
+        },
+        include: {
+            jenisUmkm: true,
+            warga: {
+                select: {
+                    wargaId: true,
+                    namaLengkap: true,
+                    telepon: true,
+                    foto: true,
+                }
+            }
+        }
+    })
+    return umkm
+}
+
+const setStatusUmkm = async (umkmId, status) => {
+    const umkm = await prisma.umkm.update({
+        where: {
+            umkmId
+        },
+        data: {
+            status
+        }
+    })
+    return umkm
+}
+
+const editUmkm = async (umkmId, data) => {
+    const umkm = await prisma.umkm.update({
+        where: {
+            umkmId
+        },
+        data
+    })
+    return umkm
+}
+
+module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm }
