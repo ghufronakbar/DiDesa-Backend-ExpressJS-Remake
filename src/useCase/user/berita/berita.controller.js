@@ -3,7 +3,7 @@ const { getBeritaLimitService, getBeritaPrioritasService, getBeritaPopulerServic
 
 const getBeritaController = async (req, res) => {
     const { limit, q } = req.query
-    const { wargaId, isLoggedIn } = req.decoded
+    const { isLoggedIn } = req.decoded
     try {
         const queryLimit = limit ? parseInt(limit) : 5
         if (q === 'prioritas') {
@@ -46,6 +46,9 @@ const getDetailBeritaController = async (req, res) => {
             k.warga.foto === null ? k.warga.foto = PROFILE_DEFAULT : k.warga.foto
             if(k.warga.wargaId === wargaId){
                 k.warga.namaLengkap = 'Saya'
+                k.isDeleteable = true
+            }else{
+                k.isDeleteable = false
             }
         }
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Berita', data: berita })
