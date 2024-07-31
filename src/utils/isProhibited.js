@@ -9,8 +9,7 @@ const isProhibited = async (text, prohibitedWords) => {
     const lowerCaseText = text.toLowerCase();        
     const cleanedText = lowerCaseText.replace(/[^a-z]/g, '');        
     for (const word of prohibitedWords) {        
-        if (cleanedText.includes(word.toLowerCase())) {
-            console.log(12)
+        if (cleanedText.includes(word.toLowerCase())) {            
             return true;
         }
     }
