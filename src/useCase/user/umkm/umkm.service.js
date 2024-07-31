@@ -1,5 +1,5 @@
 const removeCloudinary = require('../../../utils/removeCloudinary')
-const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm } = require('./umkm.repository')
+const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm } = require('./umkm.repository')
 
 const getUmkmLimitService = async (limit) => {
     const umkm = await getUmkmLimit(parseInt(limit))
@@ -70,5 +70,19 @@ const editUmkmService = async (umkmId, data, wargaId) => {
     return umkm
 }
 
+const deleteUmkmService = async (umkmId, wargaId) => {
+    const check = await getUmkmById(parseInt(umkmId))
+    if (!check) {
+        return new Error('Data Umkm Tidak Ditemukan')
+    }
+    if (check.wargaId !== wargaId) {
+        return new Error('Tidak Bisa Menghapus Umkm')
+    }
+    if (check.gambar) {
+        await removeCloudinary(check.gambar, "umkm")
+    }
+    const umkm = await deleteUmkm(parseInt(umkmId))
+    return umkm
+}
 
-module.exports = { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService }
+module.exports = { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService }

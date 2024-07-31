@@ -135,4 +135,13 @@ const editUmkm = async (umkmId, data) => {
     return umkm
 }
 
-module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm }
+const deleteUmkm = async (umkmId) => {
+    const umkm = await prisma.umkm.delete({
+        where: {
+            umkmId
+        }
+    })
+    return umkm
+}
+
+module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm }

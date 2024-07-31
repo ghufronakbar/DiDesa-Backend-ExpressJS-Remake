@@ -16,7 +16,7 @@ const removeCloudinary = async (url, target) => {
         
         const publicId = extractPublicId(url);
         
-        const result = await cloudinary.uploader.destroy(publicId);
+        const result = await cloudinary.uploader.destroy(publicId);        
         return result;
     } catch (error) {
         throw new Error(`Gagal menghapus gambar: ${error.message}`);

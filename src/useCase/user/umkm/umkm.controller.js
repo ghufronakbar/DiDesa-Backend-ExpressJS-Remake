@@ -1,6 +1,6 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 const removeCloudinary = require('../../../utils/removeCloudinary')
-const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService } = require('./umkm.service')
+const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService } = require('./umkm.service')
 
 const getUmkmLimitController = async (req, res) => {
     const { limit, q } = req.query
@@ -43,7 +43,7 @@ const getUmkmLimitController = async (req, res) => {
         }
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -54,7 +54,7 @@ const getJenisUmkmController = async (req, res) => {
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Jenis Umkm', data })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -85,7 +85,7 @@ const createUmkmController = async (req, res) => {
         if (req.file && req.file.path) {
             await removeCloudinary(req.file.path, "umkm")
         }
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -109,7 +109,7 @@ const getUmkmByIdController = async (req, res) => {
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', data: umkm })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -134,7 +134,7 @@ const setStatusUmkmController = async (req, res) => {
         return res.status(200).json({ status: 200, isLoggedIn, message, data: umkm })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -145,23 +145,42 @@ const editUmkmController = async (req, res) => {
     const gambar = req.file ? req.file.path : null
     try {
         if (!wargaId || !isLoggedIn) {
-            if(req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
         if (!nama || !deskripsi || !lokasi) {
-            if(req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Data wajib diisi' })
         }
         const data = { nama, deskripsi, lokasi }
         data.gambar = gambar
         const umkm = await editUmkmService(parseInt(id), data, wargaId)
         if (umkm instanceof Error) {
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Berhasil mengedit umkm', data: umkm })
     } catch (error) {
         console.log(error)
-        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
+const deleteUmkmController = async (req, res) => {
+    const { id } = req.params
+    const { isLoggedIn, wargaId } = req.decoded
+    try {
+        if (!wargaId || !isLoggedIn) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
+        }
+        const umkm = await deleteUmkmService(parseInt(id), parseInt(wargaId))
+        if (umkm instanceof Error) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
+        }
+        return res.status(200).json({ status: 200, isLoggedIn, message: 'Berhasil menghapus umkm', data: umkm })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
     }
 }
 
@@ -171,5 +190,6 @@ module.exports = {
     createUmkmController,
     getUmkmByIdController,
     setStatusUmkmController,
-    editUmkmController
+    editUmkmController,
+    deleteUmkmController
 }
