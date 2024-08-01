@@ -129,4 +129,46 @@ const getCalonByPemilihanId = async (pemilihanKetuaId) => {
     return calon
 }
 
-module.exports = { getAllPemilihan, getPemilihanById, checkVote, doVote, getPemilihanByCalonId, getCalonById, getCalonByPemilihanId }
+const getLatestPemilihan = async () => {
+    const pemilihan = await prisma.pemilihanKetua.findMany({
+        orderBy: {
+          pemilihanKetuaId: 'desc'  
+        },
+        take: 1,
+        include: {
+            _count: {
+                select: {
+                    calonKetua: true
+                }
+            },
+            calonKetua: {
+                select: {
+                    calonKetuaId: true,
+                    deskripsi: true,
+
+                    _count: {
+                        select: {
+                            vote: true
+                        }
+                    },
+                    warga: {
+                        select: {
+                            wargaId: true,
+                            namaLengkap: true,
+                            telepon: true,
+                            nik: true,
+                            kk: true,
+                            tanggalLahir: true,
+                            foto: true
+                        }
+                    }
+
+                },
+
+            }
+        }
+    })
+    return pemilihan.length > 0 ? pemilihan[0] : null
+}
+
+module.exports = { getAllPemilihan, getPemilihanById, checkVote, doVote, getPemilihanByCalonId, getCalonById, getCalonByPemilihanId, getLatestPemilihan }
