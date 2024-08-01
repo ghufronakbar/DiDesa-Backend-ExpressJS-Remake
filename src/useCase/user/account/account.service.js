@@ -67,7 +67,6 @@ const forgotPasswordService = async (nik, baseUrl) => {
         return new Error('Akun Tidak Ditemukan')
     }
     const checkTime = await getForgotPassword(checkNik.wargaId, validateTime)
-    console.log(checkTime)
     if (checkTime) {
         return new Error('Link sudah dikirim, Harap coba kembali setelah 10 menit')
     }

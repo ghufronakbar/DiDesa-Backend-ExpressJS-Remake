@@ -84,8 +84,16 @@ const getForgotPassword = async (wargaId, time) => {
     const forgot = await prisma.forgotPassword.count({
         where: {
             AND: [
-                { wargaId },
-                { expired: { lte: time } }
+                {
+                    wargaId
+                },
+                {
+                    expired:
+                    {
+                        lte: time,
+                        gte: new Date()
+                    }
+                }
             ]
         }
     })

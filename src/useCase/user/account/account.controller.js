@@ -28,6 +28,7 @@ const profileController = async (req, res) => {
         if (profile instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: profile.message })
         }
+        profile.foto === null ? profile.isPicDeletable = false : profile.isPicDeletable = true
         profile.foto === null ? profile.foto = PROFILE_DEFAULT : profile.foto
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Profile', data: profile })
     } catch (error) {
