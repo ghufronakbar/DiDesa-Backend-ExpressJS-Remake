@@ -7,5 +7,6 @@ router.use('/komentar', require('../useCase/user/komentar'));
 router.use('/umkm', require('../useCase/user/umkm'));
 router.use('/pengaduan-masyarakat', require('../useCase/user/pengaduanMasyarakat'));
 router.use('/informasi-desa', require('../useCase/user/informasiDesa'));
+router.use('/pemilihan', require('../useCase/user/pemilihan'));
 
 module.exports = router

@@ -11,6 +11,9 @@ const loginController = async (req, res) => {
         if (token instanceof Error) {
             return res.status(400).json({ status: 400, message: token.message })
         }
+        
+        res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)        
+
         return res.status(200).json({ status: 200, message: 'Berhasil Login', token: token })
     } catch (error) {
         console.log(error)

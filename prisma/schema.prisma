@@ -129,9 +129,10 @@ model Warga {
 }
 
 model Vote {
-  voteId       Int @id @default(autoincrement())
-  wargaId      Int @unique
+  voteId       Int      @id @default(autoincrement())
+  wargaId      Int
   calonKetuaId Int
+  waktu        DateTime @default(now())
 
   calonKetua CalonKetua? @relation(fields: [calonKetuaId], references: [calonKetuaId], onDelete: Cascade)
   warga      Warga?      @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)

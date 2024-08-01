@@ -14,7 +14,7 @@ const login = async (req, res) => {
         if (token instanceof Error) {
             return res.status(401).json({ status: 401, message: token.message });
         }
-        // SET COOKIES
+        
         res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)        
 
         return res.status(200).json({ status: 200, message: 'Login berhasil', token })
