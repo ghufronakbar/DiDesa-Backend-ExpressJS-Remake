@@ -44,7 +44,10 @@ const getDetailBeritaController = async (req, res) => {
         }
         for(const k of berita.komentar){
             k.warga.foto === null ? k.warga.foto = PROFILE_DEFAULT : k.warga.foto
-            if(k.warga.wargaId === wargaId){
+            if(k.warga.wargaId === 0){
+                k.warga.namaLengkap = k.warga.namaLengkap
+                k.isDeleteable = false
+            }else if(k.warga.wargaId === wargaId){
                 k.warga.namaLengkap = 'Saya'
                 k.isDeleteable = true
             }else{
