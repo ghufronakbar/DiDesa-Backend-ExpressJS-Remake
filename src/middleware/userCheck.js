@@ -20,11 +20,14 @@ const userCheck = async (req, res, next) => {
                 }
                 if (decoded.exp < Math.floor(Date.now() / 1000)) {                                        
                     return next()
+                }if(decoded.wargaId){
+                    isLoggedIn = true   
+                    req.decoded = decoded
+                    req.decoded.isLoggedIn = true                
+                    return next()
+                }else{
+                    return next()
                 }
-                isLoggedIn = true   
-                req.decoded = decoded
-                req.decoded.isLoggedIn = true                
-                next()
             })
         }
     } catch (error) {
