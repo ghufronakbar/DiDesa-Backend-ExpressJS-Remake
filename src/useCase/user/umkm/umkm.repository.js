@@ -41,6 +41,7 @@ const getUmkmByJenis = async (jenisUmkmId, limit) => {
         },
         take: limit,
         include: {
+            jenisUmkm: true,
             warga: {
                 select: {
                     wargaId: true,
