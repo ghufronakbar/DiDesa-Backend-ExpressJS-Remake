@@ -3,10 +3,7 @@ const { createKomentarService, deleteKomentarService } = require('./komentar.ser
 const createKomentarController = async (req, res) => {
     const { isi, beritaId } = req.body
     const { wargaId, isLoggedIn } = req.decoded
-    try {
-        if (!wargaId || !isLoggedIn) {
-            return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
-        }
+    try {      
         if (!isi || !beritaId) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Semua field wajib diisi' })
         }
