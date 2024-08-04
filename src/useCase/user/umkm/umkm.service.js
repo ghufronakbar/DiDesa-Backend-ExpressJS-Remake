@@ -1,5 +1,5 @@
 const removeCloudinary = require('../../../utils/removeCloudinary')
-const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm } = require('./umkm.repository')
+const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm, getUmkmByWarga } = require('./umkm.repository')
 
 const getUmkmLimitService = async (limit) => {
     const umkm = await getUmkmLimit(parseInt(limit))
@@ -85,4 +85,9 @@ const deleteUmkmService = async (umkmId, wargaId) => {
     return umkm
 }
 
-module.exports = { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService }
+const getUmkmSayaService = async (wargaId) => {
+    const umkm = await getUmkmByWarga(parseInt(wargaId))
+    return umkm
+}
+
+module.exports = { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService, getUmkmSayaService }

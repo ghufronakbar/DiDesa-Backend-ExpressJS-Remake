@@ -1,6 +1,6 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 const removeCloudinary = require('../../../utils/removeCloudinary')
-const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService } = require('./umkm.service')
+const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService, getUmkmSayaService } = require('./umkm.service')
 
 const getUmkmLimitController = async (req, res) => {
     const { limit, q } = req.query
@@ -184,6 +184,23 @@ const deleteUmkmController = async (req, res) => {
     }
 }
 
+const getUmkmSayaController = async (req, res) => {
+    const { wargaId, isLoggedIn } = req.decoded
+    try {
+        if (!wargaId || !isLoggedIn) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
+        }
+        const umkm = await getUmkmSayaService(parseInt(wargaId))
+        if (umkm instanceof Error) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
+        }
+        return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', data: umkm })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, isLoggedIn, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
 module.exports = {
     getUmkmLimitController,
     getJenisUmkmController,
@@ -191,5 +208,6 @@ module.exports = {
     getUmkmByIdController,
     setStatusUmkmController,
     editUmkmController,
-    deleteUmkmController
+    deleteUmkmController,
+    getUmkmSayaController
 }

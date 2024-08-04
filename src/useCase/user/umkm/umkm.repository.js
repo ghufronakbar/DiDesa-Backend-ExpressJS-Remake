@@ -145,4 +145,16 @@ const deleteUmkm = async (umkmId) => {
     return umkm
 }
 
-module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm }
+const getUmkmByWarga = async (wargaId) => {
+    const umkm = await prisma.umkm.findMany({
+        where: {
+            wargaId
+        },
+        include: {
+            jenisUmkm: true
+        }
+    })
+    return umkm
+}
+
+module.exports = { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm, getUmkmByWarga }

@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { getUmkmLimitController, getJenisUmkmController, createUmkmController, getUmkmByIdController, setStatusUmkmController, editUmkmController, deleteUmkmController } = require('./umkm.controller');
+const { getUmkmLimitController, getJenisUmkmController, createUmkmController, getUmkmByIdController, setStatusUmkmController, editUmkmController, deleteUmkmController, getUmkmSayaController
+
+} = require('./umkm.controller');
 const { userCheck } = require('../../../middleware/userCheck');
 const uploadCloudinary = require('../../../utils/uploadCloudinary')
 
 router.get('/', userCheck, getUmkmLimitController)
+router.get('/saya', userCheck, getUmkmSayaController)
 router.get('/jenis', userCheck, getJenisUmkmController)
 router.get('/:id', userCheck, getUmkmByIdController)
 router.post('/', userCheck, uploadCloudinary('umkm').single('gambar'), createUmkmController)
