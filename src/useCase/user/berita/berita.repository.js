@@ -106,6 +106,9 @@ const getDetailBerita = async (beritaId) => {
                             foto: true,
                         }
                     }
+                },
+                orderBy:{
+                    komentarId: 'desc'
                 }
             }
         }
