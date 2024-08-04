@@ -19,7 +19,7 @@ const loginService = async (nik, password) => {
     }
     const token = jwt.sign({ wargaId: account.wargaId }, JWT_SECRET, { expiresIn: '24h' })
     await updateToken(account.wargaId, token)
-    return token
+    return { token, account }
 }
 
 const profileService = async (wargaId) => {

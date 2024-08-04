@@ -5,16 +5,16 @@ const loginController = async (req, res) => {
     const { nik, password } = req.body
     try {
         if (!nik || !password) {
-            return res.status(400).json({ status: 400,  message: 'Semua field wajib diisi' })
+            return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
         }
-        const token = await loginService(nik, password)
+        const { token, account } = await loginService(nik, password)
         if (token instanceof Error) {
             return res.status(400).json({ status: 400, message: token.message })
         }
-        
-        res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)        
+        account.isLoggedIn = true
+        res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)
 
-        return res.status(200).json({ status: 200, message: 'Berhasil Login', token: token })
+        return res.status(200).json({ status: 200, message: 'Berhasil Login', token: token, data: account })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
