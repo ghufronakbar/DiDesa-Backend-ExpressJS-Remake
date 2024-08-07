@@ -5,8 +5,8 @@ const getInformasiDesa = async () => {
     return informasi
 }
 
-const editInformasiDesa = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan,) => {
-    const edit = await editInformasi(namaDesa, deskripsi, lahanPertanian, lahanPeternakan,)
+const editInformasiDesa = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan, luasWilayah) => {
+    const edit = await editInformasi(namaDesa, deskripsi, lahanPertanian, lahanPeternakan, luasWilayah)
     return edit
 }
 

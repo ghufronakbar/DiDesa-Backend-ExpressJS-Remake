@@ -5,13 +5,14 @@ const getInformasi = async () => {
     return informasi[0]
 }
 
-const editInformasi = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan) => {
+const editInformasi = async (namaDesa, deskripsi, lahanPertanian, lahanPeternakan, luasWilayah) => {
     const edit = await prisma.informasiDesa.updateMany({
         data: {
             namaDesa,
             deskripsi,
             lahanPertanian,
             lahanPeternakan,
+            luasWilayah
         }
     })
     return edit

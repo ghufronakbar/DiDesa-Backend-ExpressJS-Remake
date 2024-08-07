@@ -10,12 +10,12 @@ const informasiDesa = async (req, res) => {
 }
 
 const editInformasi = async (req, res) => {
-    const { namaDesa, deskripsi, lahanPertanian, lahanPeternakan } = req.body    
+    const { namaDesa, deskripsi, lahanPertanian, lahanPeternakan, luasWilayah } = req.body    
     try {
-        if (!namaDesa || !deskripsi || !lahanPertanian || !lahanPeternakan) {
+        if (!namaDesa || !deskripsi || !lahanPertanian || !lahanPeternakan || !luasWilayah) {
             return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
         }
-        const edit = await editInformasiDesa(namaDesa, deskripsi, lahanPertanian, lahanPeternakan)
+        const edit = await editInformasiDesa(namaDesa, deskripsi, lahanPertanian, lahanPeternakan , luasWilayah)
         return res.status(200).json({ status: 200, message: 'Berhasil Mengedit Informasi', data: edit })
     } catch (error) {
         console.log(error)

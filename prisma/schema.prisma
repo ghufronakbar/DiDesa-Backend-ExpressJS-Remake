@@ -41,6 +41,7 @@ model InformasiDesa {
   informasiDesaId Int    @id @default(autoincrement())
   namaDesa        String @db.VarChar(255)
   deskripsi       String
+  luasWilayah     Float  @default(0)
   lahanPertanian  Float  @default(0)
   lahanPeternakan Float  @default(0)
 }
