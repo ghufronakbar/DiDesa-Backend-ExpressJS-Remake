@@ -11,12 +11,12 @@ const loginController = async (req, res) => {
         if ( handleLogin instanceof Error ) {
             return res.status(400).json({ status: 400, message: handleLogin.message })            
         }
-        if(account){
-            account.isLoggedIn = true
-        }
-        res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)
+        
+            handleLogin.account.isLoggedIn = true
+        
+        res.setHeader("Set-Cookie", `token=${handleLogin.token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)
 
-        return res.status(200).json({ status: 200, message: 'Berhasil Login', token: token, data: account })
+        return res.status(200).json({ status: 200, message: 'Berhasil Login', token: handleLogin.token, data: handleLogin.account })
     } catch (error) {
         console.log(error)
         return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
