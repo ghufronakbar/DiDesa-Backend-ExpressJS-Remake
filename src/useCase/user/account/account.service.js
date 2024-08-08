@@ -9,16 +9,17 @@ const sendWhatsapp = require('../../../utils/sendWhatsapp')
 const { messageLinkVerify, messagePasswordReset } = require('../../../helper/messagePassword')
 
 const loginService = async (nik, password) => {
-    const account = await getAccount(nik)
+    const account = await getAccount(nik)    
     if (!account) {
         return new Error('Akun Tidak Ditemukan')
     }
-    const check = await bcrypt.compare(password, account.password)
+    const check = await bcrypt.compare(password, account.password)    
     if (!check) {
         return new Error('Password Salah')
     }
     const token = jwt.sign({ wargaId: account.wargaId }, JWT_SECRET, { expiresIn: '24h' })
-    await updateToken(account.wargaId, token)
+    await updateToken(account.wargaId, token)    
+
     return { token, account }
 }
 
