@@ -62,12 +62,12 @@ const deletePictureService = async (wargaId) => {
 }
 
 const forgotPasswordService = async (nik, baseUrl) => {
-    const validateTime = afterTenMinutes()
+    const validateTime = afterTenMinutes()    
     const checkNik = await getAccount(nik)
     if (!checkNik) {
         return new Error('Akun Tidak Ditemukan')
     }
-    const checkTime = await getForgotPassword(checkNik.wargaId, validateTime)
+    const checkTime = await getForgotPassword(checkNik.wargaId)    
     if (checkTime) {
         return new Error('Link sudah dikirim, Harap coba kembali setelah 10 menit')
     }

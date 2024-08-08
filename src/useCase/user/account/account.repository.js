@@ -86,8 +86,8 @@ const createForgotPassword = async (wargaId, token, expired) => {
     })
 }
 
-const getForgotPassword = async (wargaId, time) => {
-    const forgot = await prisma.forgotPassword.count({
+const getForgotPassword = async (wargaId) => {
+    const forgot = await prisma.forgotPassword.findMany({
         where: {
             AND: [
                 {
@@ -95,9 +95,8 @@ const getForgotPassword = async (wargaId, time) => {
                 },
                 {
                     expired:
-                    {
-                        lte: time,
-                        gte: new Date()
+                    {                        
+                        gte: new Date(time)
                     }
                 }
             ]
