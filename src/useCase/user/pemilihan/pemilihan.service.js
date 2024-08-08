@@ -1,3 +1,4 @@
+const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 const { getAllPemilihan, getPemilihanById, checkVote, doVote, getPemilihanByCalonId, getCalonById, getCalonByPemilihanId, getLatestPemilihan } = require('./pemilihan.repository')
 
 const getAllPemilihanService = async (wargaId) => {
@@ -92,6 +93,7 @@ const getLatestPemilihanService = async (wargaId) => {
         if (isVoted) {
             pemilihan.isVoted = true
         }
+        c.warga.foto === null ? c.warga.foto = PROFILE_DEFAULT : c.warga.foto
     }
     if (pemilihan.tanggalMulai < new Date() && pemilihan.tanggalSelesai > new Date()) {
         pemilihan.isVoteable = true
