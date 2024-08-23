@@ -1,15 +1,15 @@
 const removeCloudinary = require('../../../utils/removeCloudinary')
 const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm, getUmkmByWarga } = require('./umkm.repository')
 
-const getUmkmLimitService = async (limit) => {
-    const umkm = await getUmkmLimit(parseInt(limit))
-    const count = await countUmkm()
+const getUmkmLimitService = async (limit, search) => {
+    const umkm = await getUmkmLimit(parseInt(limit), search)
+    const count = await countUmkm(search)
     return { umkm, count }
 }
 
-const getUmkmByJenisService = async (id, limit) => {
-    const umkm = await getUmkmByJenis(parseInt(id), parseInt(limit))
-    const count = await countUmkmByJenis(parseInt(id))
+const getUmkmByJenisService = async (id, limit, search) => {
+    const umkm = await getUmkmByJenis(parseInt(id), parseInt(limit), search)
+    const count = await countUmkmByJenis(parseInt(id), search)
     return { umkm, count }
 }
 

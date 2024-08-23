@@ -1,11 +1,19 @@
 const prisma = require('../../../db/prisma')
 
-const getUmkmLimit = async (limit) => {
+const getUmkmLimit = async (limit, search) => {
     const umkm = await prisma.umkm.findMany({
         take: limit,
         where: {
-            approve: true,
-            status: true
+            AND: [
+                { approve: true },
+                { status: true },
+                {
+                    nama: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                }
+            ]
         },
         include: {
             jenisUmkm: true,
@@ -22,22 +30,40 @@ const getUmkmLimit = async (limit) => {
     return umkm
 }
 
-const countUmkm = async () => {
+const countUmkm = async (search) => {
     const count = await prisma.umkm.count({
         where: {
-            approve: true,
-            status: true
+            AND: [
+                { approve: true },
+                { status: true },
+                {
+                    nama: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                }
+            ]
         }
     })
     return count
 }
 
-const getUmkmByJenis = async (jenisUmkmId, limit) => {
+const getUmkmByJenis = async (jenisUmkmId, limit, search) => {
     const umkm = await prisma.umkm.findMany({
         where: {
-            jenisUmkmId,
-            approve: true,
-            status: true
+            AND: [
+                { approve: true },
+                { status: true },
+                {
+                    jenisUmkmId
+                },
+                {
+                    nama: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                }
+            ]
         },
         take: limit,
         include: {
@@ -58,9 +84,13 @@ const getUmkmByJenis = async (jenisUmkmId, limit) => {
 const countUmkmByJenis = async (jenisUmkmId) => {
     const count = await prisma.umkm.count({
         where: {
-            jenisUmkmId,
-            approve: true,
-            status: true
+            AND: [
+                { approve: true },
+                { status: true },
+                {
+                    jenisUmkmId
+                }
+            ]
         }
     })
     return count

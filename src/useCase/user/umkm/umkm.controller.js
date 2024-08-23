@@ -5,13 +5,14 @@ const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createU
 const getUmkmLimitController = async (req, res) => {
     const { limit, q } = req.query
     const { wargaId, isLoggedIn } = req.decoded
+    const search = req.query.search || ''
     try {
         const queryLimit = limit ? parseInt(limit) : 5
         if (q && isNaN(parseInt(q))) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Jenis Umkm Tidak Valid' })
         }
         if (q) {
-            const { umkm, count } = await getUmkmByJenisService(q, queryLimit)
+            const { umkm, count } = await getUmkmByJenisService(q, queryLimit, search)
             const dataLength = {
                 currentData: umkm.length,
                 totalData: count
@@ -26,7 +27,7 @@ const getUmkmLimitController = async (req, res) => {
             }
             return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', dataLength, data: umkm, })
         } else {
-            const { umkm, count } = await getUmkmLimitService(queryLimit)
+            const { umkm, count } = await getUmkmLimitService(queryLimit, search)
             const dataLength = {
                 currentData: umkm.length,
                 totalData: count
