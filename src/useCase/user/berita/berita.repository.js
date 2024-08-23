@@ -1,13 +1,23 @@
 const prisma = require('../../../db/prisma')
 
-const getBeritaLimit = async (limit) => {
+const getBeritaLimit = async (limit, search) => {
     const berita = await prisma.berita.findMany({
         take: limit,
         orderBy: {
             tanggal: 'desc'
         },
         where: {
-            publikasi: true
+            AND: [
+                {
+                    judul: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    publikasi: true
+                }
+            ]
         },
         include: {
             _count: {
@@ -117,7 +127,7 @@ const getDetailBerita = async (beritaId) => {
                         }
                     }
                 },
-                orderBy:{
+                orderBy: {
                     komentarId: 'desc'
                 }
             }
