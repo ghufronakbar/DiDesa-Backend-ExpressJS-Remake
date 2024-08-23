@@ -11,7 +11,7 @@ const getUmkmLimitController = async (req, res) => {
         if (q && isNaN(parseInt(q))) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Jenis Umkm Tidak Valid' })
         }
-        if (q) {
+        if (q && parseInt(q) !== 0) {
             const { umkm, count } = await getUmkmByJenisService(q, queryLimit, search)
             const dataLength = {
                 currentData: umkm.length,
