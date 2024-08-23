@@ -88,7 +88,7 @@ const countUmkmByJenis = async (jenisUmkmId, search) => {
                 { approve: true },
                 { status: true },
                 {
-                    search: {
+                    nama: {
                         contains: search,
                         mode: 'insensitive'
                     }
