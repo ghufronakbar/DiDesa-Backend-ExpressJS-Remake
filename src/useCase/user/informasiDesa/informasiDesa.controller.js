@@ -1,9 +1,7 @@
 const { getInformasiService } = require('./informasiDesa.service')
 
 const getInformasiController = async (req, res) => {
-    const { isLoggedIn } = req.decoded
-    console.log(isLoggedIn)
-    console.log(req.decoded)
+    const { isLoggedIn } = req.decoded    
     try {
         const { informasiDesa, pengurusDesa } = await getInformasiService()
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Informasi Desa', data: { informasiDesa, pengurusDesa } })

@@ -23,7 +23,7 @@ const userCheck = async (req, res, next) => {
                 }if(decoded.wargaId){
                     isLoggedIn = true   
                     req.decoded = decoded
-                    req.decoded.isLoggedIn = true                
+                    req.decoded.isLoggedIn = true                        
                     return next()
                 }else{
                     return next()

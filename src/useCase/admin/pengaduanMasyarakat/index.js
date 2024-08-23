@@ -1,9 +1,11 @@
-const  { getPengaduanController, deletePengaduanController,getPengaduanByIdController } = require('./pengaduanMasyarakat.controller');
 const express = require('express');
 const router = express.Router();
+const { getPengaduanController, deletePengaduanController, getPengaduanByIdController } = require('./pengaduanMasyarakat.controller');
+const setCache = require('../../../utils/cache/setCache');
+const clearCache = require('../../../utils/cache/clearCache');
 
-router.get('/', getPengaduanController)
-router.get('/:id', getPengaduanByIdController)
-router.delete('/:id', deletePengaduanController)
+router.get('/', setCache(43200), getPengaduanController)
+router.get('/:id', setCache(43200), getPengaduanByIdController)
+router.delete('/:id', clearCache('pengaduan'), deletePengaduanController)
 
 module.exports = router

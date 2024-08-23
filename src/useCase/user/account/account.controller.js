@@ -26,7 +26,7 @@ const loginController = async (req, res) => {
 const profileController = async (req, res) => {
     const { wargaId, isLoggedIn } = req.decoded
     try {
-        if (!isLoggedIn) {
+        if (!isLoggedIn || wargaId === 0) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Belum Login' })
         }
         const profile = await profileService(wargaId)
