@@ -20,10 +20,20 @@ const getBeritaLimit = async (limit) => {
     return berita
 }
 
-const countBerita = async () => {
+const countBerita = async (search) => {
     const berita = await prisma.berita.count({
         where: {
-            publikasi: true
+            AND: [
+                {
+                    judul: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    publikasi: true
+                }
+            ]
         }
     })
     return berita

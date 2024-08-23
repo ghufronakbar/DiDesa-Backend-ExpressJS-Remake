@@ -4,6 +4,7 @@ const { getBeritaLimitService, getBeritaPrioritasService, getBeritaPopulerServic
 const getBeritaController = async (req, res) => {
     const { limit, q } = req.query
     const { isLoggedIn } = req.decoded
+    const search = req.query.search || ''
     try {
         const queryLimit = limit ? parseInt(limit) : 5
         if (q === 'prioritas') {
@@ -21,7 +22,7 @@ const getBeritaController = async (req, res) => {
             }
             return res.status(200).json({ status: 200, isLoggedIn, dataLength, message: 'Data Berita Populer', data: berita })
         } else {
-            const { berita, count } = await getBeritaLimitService(queryLimit)
+            const { berita, count } = await getBeritaLimitService(queryLimit, search)
             const dataLength = {
                 currentData: berita.length,
                 totalData: count
@@ -42,15 +43,15 @@ const getDetailBeritaController = async (req, res) => {
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }
-        for(const k of berita.komentar){
+        for (const k of berita.komentar) {
             k.warga.foto === null ? k.warga.foto = PROFILE_DEFAULT : k.warga.foto
-            if(k.warga.wargaId === 0){
+            if (k.warga.wargaId === 0) {
                 k.warga.namaLengkap = k.warga.namaLengkap
                 k.isDeleteable = false
-            }else if(k.warga.wargaId === wargaId){
+            } else if (k.warga.wargaId === wargaId) {
                 k.warga.namaLengkap = 'Saya'
                 k.isDeleteable = true
-            }else{
+            } else {
                 k.isDeleteable = false
             }
         }

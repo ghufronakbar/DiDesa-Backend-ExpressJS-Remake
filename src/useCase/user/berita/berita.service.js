@@ -1,8 +1,8 @@
 const { getBeritaLimit, getBeritaPrioritas, countBerita, countBeritaPrioritas, getBeritaPopuler, getDetailBerita } = require('./berita.repository')
 
-const getBeritaLimitService = async (limit) => {
-    const berita = await getBeritaLimit(parseInt(limit))
-    const count = await countBerita()
+const getBeritaLimitService = async (limit, search) => {
+    const berita = await getBeritaLimit(parseInt(limit), search)
+    const count = await countBerita(search)
     return { berita, count }
 }
 
@@ -14,7 +14,7 @@ const getBeritaPrioritasService = async (limit) => {
 
 const getBeritaPopulerService = async (limit) => {
     const berita = await getBeritaPopuler(parseInt(limit))
-    const count = await countBerita()
+    const count = await countBerita("")
     return { berita, count }
 }
 
