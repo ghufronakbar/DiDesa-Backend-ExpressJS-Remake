@@ -81,12 +81,18 @@ const getUmkmByJenis = async (jenisUmkmId, limit, search) => {
     return umkm
 }
 
-const countUmkmByJenis = async (jenisUmkmId) => {
+const countUmkmByJenis = async (jenisUmkmId, search) => {
     const count = await prisma.umkm.count({
         where: {
             AND: [
                 { approve: true },
                 { status: true },
+                {
+                    search: {
+                        contains: search,
+                        mode: 'insensitive'
+                    }
+                },
                 {
                     jenisUmkmId
                 }
