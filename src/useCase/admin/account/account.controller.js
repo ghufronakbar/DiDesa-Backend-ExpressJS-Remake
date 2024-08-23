@@ -16,6 +16,7 @@ const login = async (req, res) => {
         }
         
         res.setHeader("Set-Cookie", `token=${token}; Path=/; HttpOnly; Expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()}`)        
+        res.cookie('token', token)
 
         return res.status(200).json({ status: 200, message: 'Login berhasil', token })
     } catch (error) {
