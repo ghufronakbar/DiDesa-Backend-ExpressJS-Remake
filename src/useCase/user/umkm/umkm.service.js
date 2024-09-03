@@ -27,10 +27,13 @@ const createUmkmService = async (nama, deskripsi, lokasi, gambar, jenisUmkmId, w
     return umkm
 }
 
-const getUmkmByIdService = async (id) => {
+const getUmkmByIdService = async (id, wargaId) => {
     const umkm = await getUmkmById(parseInt(id))
     if (!umkm) {
         return new Error('Data Umkm Tidak Ditemukan')
+    }
+    if(umkm.status === false && umkm.wargaId !== wargaId) {
+        return new Error('UMKM belum dipublikasikan')        
     }
     return umkm
 }

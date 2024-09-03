@@ -1,0 +1,147 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Berita {
+  beritaId Int [pk, increment]
+  judul String [not null]
+  subjudul String [not null]
+  tanggal DateTime [default: `now()`, not null]
+  isi String [not null]
+  gambar String [not null]
+  publikasi Boolean [not null, default: false]
+  prioritas Boolean [not null, default: false]
+  komentar Komentar [not null]
+}
+
+Table CalonKetua {
+  calonKetuaId Int [pk, increment]
+  pemilihanKetuaId Int [not null]
+  wargaId Int [not null]
+  deskripsi String [not null]
+  pemilihanKetua PemilihanKetua
+  warga Warga
+  vote Vote [not null]
+}
+
+Table InformasiDesa {
+  informasiDesaId Int [pk, increment]
+  namaDesa String [not null]
+  deskripsi String [not null]
+  luasWilayah Float [not null, default: 0]
+  lahanPertanian Float [not null, default: 0]
+  lahanPeternakan Float [not null, default: 0]
+}
+
+Table JenisUmkm {
+  jenisUmkmId Int [pk, increment]
+  namaJenisUmkm String [not null]
+  umkm Umkm [not null]
+}
+
+Table Komentar {
+  komentarId Int [pk, increment]
+  wargaId Int [not null]
+  isi String [not null]
+  tanggal DateTime [default: `now()`, not null]
+  beritaId Int [not null]
+  berita Berita
+  warga Warga
+}
+
+Table PemilihanKetua {
+  pemilihanKetuaId Int [pk, increment]
+  tanggalMulai DateTime [not null]
+  tanggalSelesai DateTime [not null]
+  judul String [not null]
+  deskripsi String [not null]
+  calonKetua CalonKetua [not null]
+}
+
+Table PengaduanMasyarakat {
+  pengaduanMasyarakatId Int [pk, increment]
+  wargaId Int [not null]
+  subjek String [not null]
+  isi String [not null]
+  foto String
+  tanggal DateTime [default: `now()`, not null]
+  warga Warga
+}
+
+Table PengurusDesaAnggota {
+  pengurusDesaAnggotaId Int [pk, increment]
+  wargaId Int [unique, not null]
+  jabatan String [not null]
+  aksesAdmin Boolean [not null, default: false]
+  token String
+  warga Warga
+}
+
+Table Umkm {
+  umkmId Int [pk, increment]
+  nama String [not null]
+  jenisUmkmId Int [not null]
+  deskripsi String [not null]
+  gambar String [not null]
+  lokasi String [not null]
+  approve Boolean [not null, default: false]
+  status Boolean [not null, default: false]
+  wargaId Int [not null]
+  jenisUmkm JenisUmkm
+  warga Warga
+}
+
+Table Warga {
+  wargaId Int [pk, increment]
+  nik String [unique, not null]
+  kk String [not null]
+  namaLengkap String [not null]
+  tanggalLahir DateTime [not null]
+  telepon String
+  foto String
+  password String [not null]
+  token String
+  calonKetua CalonKetua [not null]
+  komentar Komentar [not null]
+  pengaduanMasyarakat PengaduanMasyarakat [not null]
+  pengurusDesaAnggota PengurusDesaAnggota
+  umkm Umkm [not null]
+  vote Vote [not null]
+}
+
+Table Vote {
+  voteId Int [pk, increment]
+  wargaId Int [not null]
+  calonKetuaId Int [not null]
+  waktu DateTime [default: `now()`, not null]
+  calonKetua CalonKetua
+  warga Warga
+}
+
+Table ForgotPassword {
+  forgotPasswordId Int [pk, increment]
+  wargaId Int [not null]
+  token String [not null]
+  expired DateTime [not null]
+  used Boolean [not null, default: false]
+}
+
+Ref: CalonKetua.pemilihanKetuaId > PemilihanKetua.pemilihanKetuaId [delete: Cascade]
+
+Ref: CalonKetua.wargaId > Warga.wargaId [delete: Cascade]
+
+Ref: Komentar.beritaId > Berita.beritaId [delete: Cascade]
+
+Ref: Komentar.wargaId > Warga.wargaId [delete: Cascade]
+
+Ref: PengaduanMasyarakat.wargaId > Warga.wargaId [delete: Cascade]
+
+Ref: PengurusDesaAnggota.wargaId - Warga.wargaId [delete: Cascade]
+
+Ref: Umkm.jenisUmkmId > JenisUmkm.jenisUmkmId [delete: Cascade]
+
+Ref: Umkm.wargaId > Warga.wargaId [delete: Cascade]
+
+Ref: Vote.calonKetuaId > CalonKetua.calonKetuaId [delete: Cascade]
+
+Ref: Vote.wargaId > Warga.wargaId [delete: Cascade]

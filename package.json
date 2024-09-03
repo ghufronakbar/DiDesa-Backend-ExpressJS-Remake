@@ -31,5 +31,8 @@
     "multer-storage-cloudinary": "^4.0.0",
     "node-cache": "^5.1.2",
     "prisma": "^5.17.0"
+  },
+  "devDependencies": {
+    "prisma-dbml-generator": "^0.12.0"
   }
 }

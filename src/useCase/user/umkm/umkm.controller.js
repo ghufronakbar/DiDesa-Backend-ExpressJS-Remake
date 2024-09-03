@@ -75,9 +75,7 @@ const createUmkmController = async (req, res) => {
         }
         const gambar = req.file.path
         const umkm = await createUmkmService(nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId)
-        if (umkm instanceof Error) {
-            console.log(req.file)
-            console.log(req.file.path)
+        if (umkm instanceof Error) {        
             await removeCloudinary(req.file.path, "umkm")
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
@@ -92,10 +90,9 @@ const createUmkmController = async (req, res) => {
 
 const getUmkmByIdController = async (req, res) => {
     const { id } = req.params
-    const { isLoggedIn, wargaId } = req.decoded
-    console.log(wargaId)
+    const { isLoggedIn, wargaId } = req.decoded    
     try {
-        const umkm = await getUmkmByIdService(parseInt(id))
+        const umkm = await getUmkmByIdService(parseInt(id), parseInt(wargaId))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
