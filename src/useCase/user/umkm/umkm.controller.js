@@ -1,6 +1,7 @@
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 const removeCloudinary = require('../../../utils/removeCloudinary')
 const { getUmkmLimitService, getUmkmByJenisService, getJenisUmkmService, createUmkmService, getUmkmByIdService, setStatusUmkmService, editUmkmService, deleteUmkmService, getUmkmSayaService } = require('./umkm.service')
+const urlGoogleMap = require('../../../helper/urlGoogleMap')
 
 const getUmkmLimitController = async (req, res) => {
     const { limit, q } = req.query
@@ -39,6 +40,7 @@ const getUmkmLimitController = async (req, res) => {
                 } else {
                     u.isEditable = false
                 }
+                u.urlMap = urlGoogleMap(u.nama, u.lokasi)
             }
             return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', dataLength, data: umkm, })
         }
@@ -103,6 +105,7 @@ const getUmkmByIdController = async (req, res) => {
         } else {
             umkm.isEditable = false
         }
+        umkm.urlMap = urlGoogleMap(umkm.nama, umkm.lokasi)
 
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', data: umkm })
     } catch (error) {
