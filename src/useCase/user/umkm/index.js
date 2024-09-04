@@ -10,9 +10,9 @@ router.get('/', userCheck, setCache(43200), getUmkmLimitController)
 router.get('/saya', userCheck, setCache(43200, true), getUmkmSayaController)
 router.get('/jenis', userCheck, setCache(172800), getJenisUmkmController)
 router.get('/:id', userCheck, setCache(43200, true), getUmkmByIdController)
-router.post('/', userCheck, clearCache('umkm'), uploadCloudinary('umkm').single('gambar'), createUmkmController)
-router.put('/:id', userCheck, clearCache('umkm'), uploadCloudinary('umkm').single('gambar'), editUmkmController)
-router.delete('/:id', userCheck, clearCache('umkm'), deleteUmkmController)
-router.put('/status/:id', userCheck, clearCache('umkm'), setStatusUmkmController)
+router.post('/', userCheck, clearCache('umkm'), clearCache('profile', true), uploadCloudinary('umkm').single('gambar'), createUmkmController)
+router.put('/:id', userCheck, clearCache('umkm'), clearCache('profile', true), uploadCloudinary('umkm').single('gambar'), editUmkmController)
+router.delete('/:id', userCheck, clearCache('umkm'), clearCache('profile', true), deleteUmkmController)
+router.put('/status/:id', userCheck, clearCache('umkm'), clearCache('profile', true), setStatusUmkmController)
 
 module.exports = router

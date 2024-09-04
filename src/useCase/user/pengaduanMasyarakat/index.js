@@ -8,7 +8,7 @@ const clearCache = require('../../../utils/cache/clearCache');
 
 router.get('/', userCheck, setCache(86400, true), getAllPengaduanController)
 router.get('/:id', userCheck, setCache(86400, true), getPengaduanByIdController)
-router.post('/', userCheck, clearCache('pengaduan'), uploadCloudinary('pengaduan').single('foto'), createPengaduanController)
-router.delete('/:id', userCheck, clearCache('pengaduan'), deletePengaduanController)
+router.post('/', userCheck, clearCache('pengaduan'), clearCache('profile', true), uploadCloudinary('pengaduan').single('foto'), createPengaduanController)
+router.delete('/:id', userCheck, clearCache('pengaduan'), clearCache('profile', true), deletePengaduanController)
 
 module.exports = router
