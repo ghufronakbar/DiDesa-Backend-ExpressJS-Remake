@@ -13,7 +13,7 @@ const getAllJenisUmkmController = async (req, res) => {
 const getJenisUmkmByIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const umkm = await getJenisUmkmByIdService(parseInt(id))
+        const umkm = await getJenisUmkmByIdService(Number(id))
         if (umkm instanceof Error) {
             return res.status(404).json({ status: 404, message: umkm.message })
         }
@@ -48,7 +48,7 @@ const editJenisUmkmController = async (req, res) => {
         if (!namaJenisUmkm) {
             return res.status(400).json({ status: 400, message: 'Nama harus diisi' })
         }
-        const umkm = await editJenisUmkmService(parseInt(id), namaJenisUmkm)
+        const umkm = await editJenisUmkmService(Number(id), namaJenisUmkm)
         if (umkm instanceof Error) {
             return res.status(404).json({ status: 404, message: umkm.message })
         }
@@ -62,7 +62,7 @@ const editJenisUmkmController = async (req, res) => {
 const deleteJenisUmkmController = async (req, res) => {
     const { id } = req.params
     try {
-        const umkm = await deleteJenisUmkmService(parseInt(id))
+        const umkm = await deleteJenisUmkmService(Number(id))
         if (umkm instanceof Error) {
             return res.status(404).json({ status: 404, message: umkm.message })
         }

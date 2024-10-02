@@ -2,14 +2,14 @@ const removeCloudinary = require('../../../utils/removeCloudinary')
 const { getUmkmLimit, countUmkm, getUmkmByJenis, countUmkmByJenis, getJenisUmkm, createUmkm, getJenisUmkmById, getUmkmById, setStatusUmkm, editUmkm, deleteUmkm, getUmkmByWarga } = require('./umkm.repository')
 
 const getUmkmLimitService = async (limit, search) => {
-    const umkm = await getUmkmLimit(parseInt(limit), search)
+    const umkm = await getUmkmLimit(Number(limit), search)
     const count = await countUmkm(search)
     return { umkm, count }
 }
 
 const getUmkmByJenisService = async (id, limit, search) => {
-    const umkm = await getUmkmByJenis(parseInt(id), parseInt(limit), search)
-    const count = await countUmkmByJenis(parseInt(id), search)
+    const umkm = await getUmkmByJenis(Number(id), Number(limit), search)
+    const count = await countUmkmByJenis(Number(id), search)
     return { umkm, count }
 }
 
@@ -19,16 +19,16 @@ const getJenisUmkmService = async () => {
 }
 
 const createUmkmService = async (nama, deskripsi, lokasi, gambar, latitude, longitude, jenisUmkmId, wargaId) => {
-    const checkJenis = await getJenisUmkmById(parseInt(jenisUmkmId))
+    const checkJenis = await getJenisUmkmById(Number(jenisUmkmId))
     if (!checkJenis) {
         return new Error('Jenis Umkm Tidak Valid')
     }
-    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, latitude, longitude, parseInt(jenisUmkmId), parseInt(wargaId))
+    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, latitude, longitude, Number(jenisUmkmId), Number(wargaId))
     return umkm
 }
 
 const getUmkmByIdService = async (id, wargaId) => {
-    const umkm = await getUmkmById(parseInt(id))
+    const umkm = await getUmkmById(Number(id))
     if (!umkm) {
         return new Error('Data Umkm Tidak Ditemukan')
     }
@@ -39,7 +39,7 @@ const getUmkmByIdService = async (id, wargaId) => {
 }
 
 const setStatusUmkmService = async (umkmId, wargaId, status) => {
-    const check = await getUmkmById(parseInt(umkmId))
+    const check = await getUmkmById(Number(umkmId))
     if (!check) {
         return new Error('Data Umkm Tidak Ditemukan')
     }
@@ -52,12 +52,12 @@ const setStatusUmkmService = async (umkmId, wargaId, status) => {
     if (typeof status !== 'boolean') {
         return new Error('Status Umkm Tidak Valid')
     }
-    const umkm = await setStatusUmkm(parseInt(umkmId), status)
+    const umkm = await setStatusUmkm(Number(umkmId), status)
     return umkm
 }
 
 const editUmkmService = async (umkmId, data, wargaId) => {
-    const check = await getUmkmById(parseInt(umkmId))
+    const check = await getUmkmById(Number(umkmId))
     if (!check) {
         return new Error('Data Umkm Tidak Ditemukan')
     }
@@ -69,12 +69,12 @@ const editUmkmService = async (umkmId, data, wargaId) => {
     } else {
         delete data.gambar
     }
-    const umkm = await editUmkm(parseInt(umkmId), data)
+    const umkm = await editUmkm(Number(umkmId), data)
     return umkm
 }
 
 const deleteUmkmService = async (umkmId, wargaId) => {
-    const check = await getUmkmById(parseInt(umkmId))
+    const check = await getUmkmById(Number(umkmId))
     if (!check) {
         return new Error('Data Umkm Tidak Ditemukan')
     }
@@ -84,12 +84,12 @@ const deleteUmkmService = async (umkmId, wargaId) => {
     if (check.gambar) {
         await removeCloudinary(check.gambar, "umkm")
     }
-    const umkm = await deleteUmkm(parseInt(umkmId))
+    const umkm = await deleteUmkm(Number(umkmId))
     return umkm
 }
 
 const getUmkmSayaService = async (wargaId) => {
-    const umkm = await getUmkmByWarga(parseInt(wargaId))
+    const umkm = await getUmkmByWarga(Number(wargaId))
     return umkm
 }
 

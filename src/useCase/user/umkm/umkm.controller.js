@@ -8,11 +8,11 @@ const getUmkmLimitController = async (req, res) => {
     const { wargaId, isLoggedIn } = req.decoded
     const search = req.query.search || ''
     try {
-        const queryLimit = limit ? parseInt(limit) : 5
-        if (q && isNaN(parseInt(q))) {
+        const queryLimit = limit ? Number(limit) : 5
+        if (q && isNaN(Number(q))) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Jenis Umkm Tidak Valid' })
         }
-        if (q && parseInt(q) !== 0) {
+        if (q && Number(q) !== 0) {
             const { umkm, count } = await getUmkmByJenisService(q, queryLimit, search)
             const dataLength = {
                 currentData: umkm.length,
@@ -99,7 +99,7 @@ const getUmkmByIdController = async (req, res) => {
     const { id } = req.params
     const { isLoggedIn, wargaId } = req.decoded
     try {
-        const umkm = await getUmkmByIdService(parseInt(id), parseInt(wargaId))
+        const umkm = await getUmkmByIdService(Number(id), Number(wargaId))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
@@ -127,7 +127,7 @@ const setStatusUmkmController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
-        const umkm = await setStatusUmkmService(parseInt(id), wargaId, status)
+        const umkm = await setStatusUmkmService(Number(id), wargaId, status)
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
@@ -164,7 +164,7 @@ const editUmkmController = async (req, res) => {
         }
         const data = { nama, deskripsi, lokasi, latitude, longitude }
         data.gambar = gambar
-        const umkm = await editUmkmService(parseInt(id), data, wargaId)
+        const umkm = await editUmkmService(Number(id), data, wargaId)
         if (umkm instanceof Error) {
             if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
@@ -183,7 +183,7 @@ const deleteUmkmController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
-        const umkm = await deleteUmkmService(parseInt(id), parseInt(wargaId))
+        const umkm = await deleteUmkmService(Number(id), Number(wargaId))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
@@ -200,7 +200,7 @@ const getUmkmSayaController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
-        const umkm = await getUmkmSayaService(parseInt(wargaId))
+        const umkm = await getUmkmSayaService(Number(wargaId))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }

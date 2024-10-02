@@ -6,7 +6,7 @@ const getBeritaController = async (req, res) => {
     const { isLoggedIn } = req.decoded
     const search = req.query.search || ''
     try {
-        const queryLimit = limit ? parseInt(limit) : 5
+        const queryLimit = limit ? Number(limit) : 5
         if (q === 'prioritas') {
             const { berita, count } = await getBeritaPrioritasService(queryLimit)
             const dataLength = {
@@ -39,7 +39,7 @@ const getDetailBeritaController = async (req, res) => {
     const { id } = req.params
     const { wargaId, isLoggedIn } = req.decoded
     try {
-        const berita = await getDetailBeritaService(parseInt(id))
+        const berita = await getDetailBeritaService(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }

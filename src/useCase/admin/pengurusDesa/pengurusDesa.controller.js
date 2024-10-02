@@ -26,7 +26,7 @@ const getAllPengurusController = async (req, res) => {
 const getPengurusByIdController = async (req, res) => {
     const { id } = req.params    
     try {
-        const pengurus = await getPengurusByIdService(parseInt(id))
+        const pengurus = await getPengurusByIdService(Number(id))
         console.log(pengurus)
         if (pengurus instanceof Error) {
             return res.status(400).json({ status: 400, message: pengurus.message })
@@ -43,7 +43,7 @@ const setAdminAccessPengurusController = async (req, res) => {
     const { id } = req.params
     const { aksesAdmin } = req.body
     try {
-        const pengurus = await setAdminAccessPengurusService(parseInt(id), aksesAdmin)
+        const pengurus = await setAdminAccessPengurusService(Number(id), aksesAdmin)
         if (pengurus instanceof Error) {
             return res.status(400).json({ status: 400, message: pengurus.message })
         }
@@ -64,7 +64,7 @@ const setJabatanPengurusController = async (req, res) => {
     const { id } = req.params
     const { jabatan } = req.body
     try {
-        const pengurus = await setJabatanPengurusService(parseInt(id), jabatan)
+        const pengurus = await setJabatanPengurusService(Number(id), jabatan)
         if (pengurus instanceof Error) {
             return res.status(400).json({ status: 400, message: pengurus.message })
         }
@@ -79,7 +79,7 @@ const deletePengurusController = async (req, res) => {
     const { id } = req.params
     console.log(id)
     try {
-        const pengurus = await deletePengurusService(parseInt(id))
+        const pengurus = await deletePengurusService(Number(id))
         if (pengurus instanceof Error) {
             return res.status(400).json({ status: 400, message: pengurus.message })
         }
@@ -96,7 +96,7 @@ const createPengurusController = async (req, res) => {
         if (!wargaId || !jabatan) {
             return res.status(400).json({ status: 400, message: 'Data wajib diisi' })
         }
-        const data = { wargaId: parseInt(wargaId), jabatan }
+        const data = { wargaId: Number(wargaId), jabatan }
         const pengurus = await createPengurusService(data)
         if (pengurus instanceof Error) {
             return res.status(400).json({ status: 400, message: pengurus.message })

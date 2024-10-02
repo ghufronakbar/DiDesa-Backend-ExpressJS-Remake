@@ -3,7 +3,7 @@ const { showBerita, showBeritaById, postBerita, editBerita, deleteBeritaById, ed
 const berita = async (req, res) => {
     const { page } = req.query
     try {
-        const queryPage = page ? parseInt(page) : 1
+        const queryPage = page ? Number(page) : 1
         const { berita, count } = await showBerita(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -21,7 +21,7 @@ const berita = async (req, res) => {
 const beritaById = async (req, res) => {
     const { id } = req.params
     try {
-        const berita = await showBeritaById(parseInt(id))
+        const berita = await showBeritaById(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }
@@ -60,7 +60,7 @@ const editBeritaById = async (req, res) => {
         }
         const data = { judul, isi, subjudul }
         if (gambar) data.gambar = gambar
-        const berita = await editBerita(parseInt(id), data)
+        const berita = await editBerita(Number(id), data)
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }
@@ -74,7 +74,7 @@ const editBeritaById = async (req, res) => {
 const deleteBerita = async (req, res) => {
     const { id } = req.params
     try {
-        const berita = await deleteBeritaById(parseInt(id))
+        const berita = await deleteBeritaById(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }
@@ -95,7 +95,7 @@ const editPublikasi = async (req, res) => {
         } else if (publikasi === false) {
             message = 'Berhasil menonpublikasikan berita'
         }
-        const berita = await editPublikasiById(parseInt(id), publikasi)
+        const berita = await editPublikasiById(Number(id), publikasi)
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }
@@ -116,7 +116,7 @@ const editPrioritas = async (req, res) => {
         } else if (prioritas === false) {
             message = 'Berita ditandai sebagai tidak prioritas'
         }
-        const berita = await editPrioritasById(parseInt(id), prioritas)
+        const berita = await editPrioritasById(Number(id), prioritas)
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
         }

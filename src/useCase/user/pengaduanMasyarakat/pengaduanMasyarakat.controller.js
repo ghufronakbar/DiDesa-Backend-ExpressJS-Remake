@@ -28,7 +28,7 @@ const getAllPengaduanController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
         }
-        const pengaduan = await getAllPengaduanService(parseInt(wargaId))
+        const pengaduan = await getAllPengaduanService(Number(wargaId))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pengaduan.message })
         }
@@ -46,7 +46,7 @@ const getPengaduanByIdController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
         }
-        const pengaduan = await getPengaduanByIdService(parseInt(id), parseInt(wargaId))
+        const pengaduan = await getPengaduanByIdService(Number(id), Number(wargaId))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pengaduan.message })
         }
@@ -64,7 +64,7 @@ const deletePengaduanController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
         }
-        const pengaduan = await deletePengaduanService(parseInt(id), parseInt(wargaId))
+        const pengaduan = await deletePengaduanService(Number(id), Number(wargaId))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pengaduan.message })
         }

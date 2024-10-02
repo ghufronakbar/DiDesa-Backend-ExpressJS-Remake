@@ -27,7 +27,7 @@ const getPemilihanByIdController = async (req, res) => {
     const { id } = req.params
     const { isLoggedIn, wargaId } = req.decoded
     try {
-        const pemilihan = await getPemilihanByIdService(wargaId, parseInt(id))
+        const pemilihan = await getPemilihanByIdService(wargaId, Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pemilihan.message })
         }

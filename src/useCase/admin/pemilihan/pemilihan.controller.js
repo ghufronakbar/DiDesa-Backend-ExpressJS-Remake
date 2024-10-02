@@ -33,7 +33,7 @@ const getAllPemilihanController = async (req, res) => {
 const getPemilihanByIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const pemilihan = await getAllPemilihanByIdService(parseInt(id))
+        const pemilihan = await getAllPemilihanByIdService(Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }
@@ -115,7 +115,7 @@ const editPemilihanController = async (req, res) => {
                 message: 'Tanggal tidak valid'
             })
         }
-        const pemilihan = await editPemilihanService(parseInt(id), judul, deskripsi, tanggalMulai, tanggalSelesai)
+        const pemilihan = await editPemilihanService(Number(id), judul, deskripsi, tanggalMulai, tanggalSelesai)
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }
@@ -129,7 +129,7 @@ const editPemilihanController = async (req, res) => {
 const deletePemilihanController = async (req, res) => {
     const { id } = req.params
     try {
-        const pemilihan = await deletePemilihanService(parseInt(id))
+        const pemilihan = await deletePemilihanService(Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }
@@ -149,7 +149,7 @@ const createCalonController = async (req, res) => {
                 message: 'Data wajib diisi'
             })
         }
-        const calon = await createCalonService(parseInt(wargaId), parseInt(pemilihanKetuaId), deskripsi)
+        const calon = await createCalonService(Number(wargaId), Number(pemilihanKetuaId), deskripsi)
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })
         }
@@ -170,7 +170,7 @@ const editCalonController = async (req, res) => {
                 message: 'Data wajib diisi'
             })
         }
-        const calon = await editCalonService(parseInt(id), deskripsi)
+        const calon = await editCalonService(Number(id), deskripsi)
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })
         }
@@ -184,7 +184,7 @@ const editCalonController = async (req, res) => {
 const deleteCalonController = async (req, res) => {
     const { id } = req.params
     try {
-        const calon = await deleteCalonService(parseInt(id))
+        const calon = await deleteCalonService(Number(id))
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })
         }
@@ -198,7 +198,7 @@ const deleteCalonController = async (req, res) => {
 const getPemilihanByCalonIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const calon = await getPemilihanByCalonIdService(parseInt(id))
+        const calon = await getPemilihanByCalonIdService(Number(id))
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })
         }

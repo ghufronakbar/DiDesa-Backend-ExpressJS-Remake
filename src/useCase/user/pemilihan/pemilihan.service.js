@@ -6,7 +6,7 @@ const getAllPemilihanService = async (wargaId) => {
     for (const p of pemilihan) {
         p.isVoted = false
         for (const c of p.calonKetua) {
-            const isVoted = await checkVote(parseInt(wargaId), c.calonKetuaId)
+            const isVoted = await checkVote(Number(wargaId), c.calonKetuaId)
             if (isVoted) {
                 p.isVoted = true
             }
@@ -26,13 +26,13 @@ const getAllPemilihanService = async (wargaId) => {
 }
 
 const getPemilihanByIdService = async (wargaId, id) => {
-    const pemilihan = await getPemilihanById(parseInt(id))
+    const pemilihan = await getPemilihanById(Number(id))
     if (!pemilihan) {
         return new Error('Pemilihan Tidak Ditemukan')
     }
     pemilihan.isVoted = false
     for (const c of pemilihan.calonKetua) {
-        const isVoted = await checkVote(parseInt(wargaId), c.calonKetuaId)
+        const isVoted = await checkVote(Number(wargaId), c.calonKetuaId)
         if (isVoted) {
             pemilihan.isVoted = true
         }
@@ -53,8 +53,8 @@ const getPemilihanByIdService = async (wargaId, id) => {
 const doVoteService = async (wargaId, calonKetuaId) => {
 
     const [cCalon, cPemilihan] = await Promise.all([
-        getCalonById(parseInt(calonKetuaId)),
-        getPemilihanByCalonId(parseInt(calonKetuaId))
+        getCalonById(Number(calonKetuaId)),
+        getPemilihanByCalonId(Number(calonKetuaId))
     ])
     console.log(cCalon, cPemilihan)
     if (!cCalon) {
@@ -72,13 +72,13 @@ const doVoteService = async (wargaId, calonKetuaId) => {
 
     const getAllCalon = await getCalonByPemilihanId(cCalon.pemilihanKetuaId)
     for (const c of getAllCalon) {
-        const check = await checkVote(parseInt(wargaId), c.calonKetuaId)
+        const check = await checkVote(Number(wargaId), c.calonKetuaId)
         if (check) {
             return new Error('Anda Sudah Memilih Dalam Pemilihan Ini')
         }
     }
 
-    const pemilihan = await doVote(parseInt(wargaId), parseInt(calonKetuaId))
+    const pemilihan = await doVote(Number(wargaId), Number(calonKetuaId))
     return pemilihan
 }
 
@@ -89,7 +89,7 @@ const getLatestPemilihanService = async (wargaId) => {
     }
     pemilihan.isVoted = false
     for (const c of pemilihan.calonKetua) {
-        const isVoted = await checkVote(parseInt(wargaId), c.calonKetuaId)
+        const isVoted = await checkVote(Number(wargaId), c.calonKetuaId)
         if (isVoted) {
             pemilihan.isVoted = true
         }

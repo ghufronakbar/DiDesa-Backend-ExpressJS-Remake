@@ -3,7 +3,7 @@ const { getPengaduanService, deletePengaduanService, getPengaduanByIdService } =
 const getPengaduanController = async (req, res) => {
     const { page } = req.query
     try {
-        const queryPage = page ? parseInt(page) : 1
+        const queryPage = page ? Number(page) : 1
         const { pengaduan, count } = await getPengaduanService(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -20,7 +20,7 @@ const getPengaduanController = async (req, res) => {
 const getPengaduanByIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const pengaduan = await getPengaduanByIdService(parseInt(id))
+        const pengaduan = await getPengaduanByIdService(Number(id))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, message: pengaduan.message })
         }
@@ -33,7 +33,7 @@ const getPengaduanByIdController = async (req, res) => {
 const deletePengaduanController = async (req, res) => {
     const { id } = req.params
     try {
-        const pengaduan = await deletePengaduanService(parseInt(id))
+        const pengaduan = await deletePengaduanService(Number(id))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, message: pengaduan.message })
         }

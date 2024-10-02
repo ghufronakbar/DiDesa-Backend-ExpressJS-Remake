@@ -6,7 +6,7 @@ const createKomentarService = async (isi, beritaId, wargaId) => {
     if (isi.length > 200) {
         return new Error('Komentar Terlalu Panjang')
     }
-    const checkBerita = await getBeritaById(parseInt(beritaId))
+    const checkBerita = await getBeritaById(Number(beritaId))
     if (!checkBerita) {
         return new Error('Berita Tidak Ditemukan')
     }
@@ -14,19 +14,19 @@ const createKomentarService = async (isi, beritaId, wargaId) => {
     if (checkWords === true) {
         return new Error('Komentar Mengandung Kata Tidak Pantas')
     }
-    const komentar = await createKomentar(isi, parseInt(beritaId), parseInt(wargaId))
+    const komentar = await createKomentar(isi, Number(beritaId), Number(wargaId))
     return komentar
 }
 
 const deleteKomentarService = async (komentarId, wargaId) => {
-    const check = await getKomentarById(parseInt(komentarId))
+    const check = await getKomentarById(Number(komentarId))
     if (!check) {
         return new Error('Komentar Tidak Ditemukan')
     }
-    if (check.wargaId !== parseInt(wargaId)) {
+    if (check.wargaId !== Number(wargaId)) {
         return new Error('Komentar Tidak Bisa Dihapus')
     }
-    const delKom = await deleteKomentar(parseInt(komentarId))
+    const delKom = await deleteKomentar(Number(komentarId))
     return delKom
 }
 

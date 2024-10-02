@@ -29,24 +29,24 @@ const getPengaduanByIdService = async (pengaduanMasyarakatId, wargaId) => {
     if (!pengaduan) {
         return new Error('Pengaduan Tidak Ditemukan')
     }
-    if (pengaduan.wargaId !== parseInt(wargaId)) {
+    if (pengaduan.wargaId !== Number(wargaId)) {
         return new Error('Pengaduan Tidak Bisa Diakses')
     }
     return pengaduan
 }
 
 const deletePengaduanService = async (pengaduanMasyarakatId, wargaId) => {
-    const pengaduan = await getPengaduanById(parseInt(pengaduanMasyarakatId))
+    const pengaduan = await getPengaduanById(Number(pengaduanMasyarakatId))
     if (!pengaduan) {
         return new Error('Pengaduan Tidak Ditemukan')
     }
-    if (pengaduan.wargaId !== parseInt(wargaId)) {
+    if (pengaduan.wargaId !== Number(wargaId)) {
         return new Error('Pengaduan Tidak Bisa Diakses')
     }
     if (pengaduan.foto !== null) {
         await removeCloudinary(pengaduan.foto, "pengaduan")
     }
-    const deleting = await deletePengaduan(parseInt(pengaduanMasyarakatId))
+    const deleting = await deletePengaduan(Number(pengaduanMasyarakatId))
     return deleting
 }
 

@@ -4,7 +4,7 @@ const { PROFILE_DEFAULT } = require('../../../constant/imageDefault');
 const getAllWargaController = async (req, res) => {
     const { page } = req.query
     try {
-        const queryPage = page ? parseInt(page) : 1
+        const queryPage = page ? Number(page) : 1
         const { warga, count } = await getAllWargaService(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -25,7 +25,7 @@ const getAllWargaController = async (req, res) => {
 const getWargaByIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const warga = await getWargaByIdService(parseInt(id))
+        const warga = await getWargaByIdService(Number(id))
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })
         }
@@ -67,7 +67,7 @@ const editWargaController = async (req, res) => {
                 message: 'Data wajib diisi'
             })
         }
-        const warga = await editWargaService(parseInt(id), nik, kk, namaLengkap, tanggalLahir, telepon)
+        const warga = await editWargaService(Number(id), nik, kk, namaLengkap, tanggalLahir, telepon)
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })
         }
@@ -81,7 +81,7 @@ const editWargaController = async (req, res) => {
 const deleteWargaController = async (req, res) => {
     const { id } = req.params
     try {
-        const warga = await deleteWargaService(parseInt(id))
+        const warga = await deleteWargaService(Number(id))
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })
         }

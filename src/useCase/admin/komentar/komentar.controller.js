@@ -4,7 +4,7 @@ const { PROFILE_DEFAULT } = require('../../../constant/imageDefault')
 const getAllKomentarController = async (req, res) => {
     const { page } = req.query
     try {
-        const queryPage = page ? parseInt(page) : 1
+        const queryPage = page ? Number(page) : 1
         const { komentar, count } = await getAllKomentarService(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -24,7 +24,7 @@ const getAllKomentarController = async (req, res) => {
 const getKomentarByIdController = async (req, res) => {
     const { id } = req.params
     try {
-        const komentar = await getKomentarByIdService(parseInt(id))
+        const komentar = await getKomentarByIdService(Number(id))
         if (komentar instanceof Error) {
             return res.status(400).json({ status: 400, message: komentar.message })
         }
@@ -38,7 +38,7 @@ const getKomentarByIdController = async (req, res) => {
 const deleteKomentarController = async (req, res) => {
     const { id } = req.params
     try {
-        const komentar = await deleteKomentarService(parseInt(id))
+        const komentar = await deleteKomentarService(Number(id))
         if (komentar instanceof Error) {
             return res.status(400).json({ status: 400, message: komentar.message })
         }
