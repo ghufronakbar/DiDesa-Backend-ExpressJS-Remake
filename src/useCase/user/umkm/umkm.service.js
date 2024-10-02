@@ -18,12 +18,12 @@ const getJenisUmkmService = async () => {
     return umkm
 }
 
-const createUmkmService = async (nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId) => {
+const createUmkmService = async (nama, deskripsi, lokasi, gambar, latitude, longitude, jenisUmkmId, wargaId) => {
     const checkJenis = await getJenisUmkmById(parseInt(jenisUmkmId))
     if (!checkJenis) {
         return new Error('Jenis Umkm Tidak Valid')
     }
-    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, parseInt(jenisUmkmId), parseInt(wargaId))
+    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, latitude, longitude, parseInt(jenisUmkmId), parseInt(wargaId))
     return umkm
 }
 
@@ -32,8 +32,8 @@ const getUmkmByIdService = async (id, wargaId) => {
     if (!umkm) {
         return new Error('Data Umkm Tidak Ditemukan')
     }
-    if(umkm.status === false && umkm.wargaId !== wargaId) {
-        return new Error('UMKM belum dipublikasikan')        
+    if (umkm.status === false && umkm.wargaId !== wargaId) {
+        return new Error('UMKM belum dipublikasikan')
     }
     return umkm
 }

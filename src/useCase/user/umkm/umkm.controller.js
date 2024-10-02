@@ -40,7 +40,7 @@ const getUmkmLimitController = async (req, res) => {
                 } else {
                     u.isEditable = false
                 }
-                u.urlMap = urlGoogleMap(u.nama, u.lokasi)
+                u.urlMap = u.latitude && u.longitude ? urlGoogleMap(u.latitude, u.longitude) : null
             }
             return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', dataLength, data: umkm, })
         }
@@ -63,21 +63,26 @@ const getJenisUmkmController = async (req, res) => {
 
 const createUmkmController = async (req, res) => {
     const { isLoggedIn, wargaId } = req.decoded
-    const { nama, deskripsi, lokasi, jenisUmkmId } = req.body
+    const { nama, deskripsi, lokasi, latitude, longitude, jenisUmkmId } = req.body
     try {
         if (!wargaId || !isLoggedIn) {
             if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
         if (!nama || !deskripsi || !lokasi || !jenisUmkmId) {
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Data wajib diisi' })
+        }
+        if (isNaN(Number(latitude)) || isNaN(Number(longitude))) {
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'Latitude dan Longitude harus number' })
         }
         if (!req.file) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Gambar wajib diisi' })
         }
         const gambar = req.file.path
-        const umkm = await createUmkmService(nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId)
-        if (umkm instanceof Error) {        
+        const umkm = await createUmkmService(nama, deskripsi, lokasi, gambar, latitude, longitude, jenisUmkmId, wargaId)
+        if (umkm instanceof Error) {
             await removeCloudinary(req.file.path, "umkm")
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
         }
@@ -92,7 +97,7 @@ const createUmkmController = async (req, res) => {
 
 const getUmkmByIdController = async (req, res) => {
     const { id } = req.params
-    const { isLoggedIn, wargaId } = req.decoded    
+    const { isLoggedIn, wargaId } = req.decoded
     try {
         const umkm = await getUmkmByIdService(parseInt(id), parseInt(wargaId))
         if (umkm instanceof Error) {
@@ -105,7 +110,7 @@ const getUmkmByIdController = async (req, res) => {
         } else {
             umkm.isEditable = false
         }
-        umkm.urlMap = urlGoogleMap(umkm.nama, umkm.lokasi)
+        umkm.urlMap = umkm.latitude && umkm.longitude ? urlGoogleMap(umkm.latitude, umkm.longitude) : null
 
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Data Umkm', data: umkm })
     } catch (error) {
@@ -142,18 +147,22 @@ const setStatusUmkmController = async (req, res) => {
 const editUmkmController = async (req, res) => {
     const { id } = req.params
     const { isLoggedIn, wargaId } = req.decoded
-    const { nama, deskripsi, lokasi } = req.body
+    const { nama, deskripsi, lokasi, latitude, longitude } = req.body
     const gambar = req.file ? req.file.path : null
     try {
         if (!wargaId || !isLoggedIn) {
             if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
-        if (!nama || !deskripsi || !lokasi) {
+        if (!nama || !deskripsi || !lokasi || !latitude || !longitude) {
             if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Data wajib diisi' })
         }
-        const data = { nama, deskripsi, lokasi }
+        if (isNaN(Number(latitude)) || isNaN(Number(longitude))) {
+            if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'Latitude dan Longitude harus number' })
+        }
+        const data = { nama, deskripsi, lokasi, latitude, longitude }
         data.gambar = gambar
         const umkm = await editUmkmService(parseInt(id), data, wargaId)
         if (umkm instanceof Error) {

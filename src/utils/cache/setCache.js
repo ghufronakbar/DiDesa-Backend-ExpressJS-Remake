@@ -12,7 +12,8 @@ const setCache = (duration, useDecoded = false) => (req, res, next) => {
     const cachedResponse = cache.get(key);    
     if (cachedResponse) {
         console.log("⚡ Using cache: ", key);
-        return res.send(cachedResponse);
+        const jsonCache = JSON.parse(cachedResponse)
+        return res.send(jsonCache);
     } else {
         console.log("⚡ Setting cache: ", key);
         res.originalSend = res.send;

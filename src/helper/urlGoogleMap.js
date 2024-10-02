@@ -1,3 +1,3 @@
-const urlGoogleMap = (name, location) => `https://maps.google.com/?q=${name}%20${location}`
+const urlGoogleMap = (latitude, longitude) => `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`
 
 module.exports = urlGoogleMap

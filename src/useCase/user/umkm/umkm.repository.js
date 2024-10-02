@@ -116,7 +116,7 @@ const getJenisUmkmById = async (jenisUmkmId) => {
     return umkm
 }
 
-const createUmkm = async (nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId) => {
+const createUmkm = async (nama, deskripsi, lokasi, gambar, latitude, longitude, jenisUmkmId, wargaId) => {
     const umkm = await prisma.umkm.create({
         data: {
             nama,
@@ -124,7 +124,9 @@ const createUmkm = async (nama, deskripsi, lokasi, gambar, jenisUmkmId, wargaId)
             lokasi,
             gambar,
             jenisUmkmId,
-            wargaId
+            wargaId,
+            latitude,
+            longitude
         }
     })
     return umkm
