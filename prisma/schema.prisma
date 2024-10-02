@@ -89,8 +89,8 @@ model Umkm {
   deskripsi   String
   gambar      String    @db.VarChar(255)
   lokasi      String    @db.VarChar(255)
-  latitude    Float?
-  longitude   Float?
+  latitude    Float
+  longitude   Float
   approve     Boolean   @default(false)
   status      Boolean   @default(false)
   wargaId     Int
