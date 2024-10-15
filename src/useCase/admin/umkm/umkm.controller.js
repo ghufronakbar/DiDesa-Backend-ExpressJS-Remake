@@ -1,5 +1,6 @@
 const { getAllUmkmService, getUmkmByIdService, deleteUmkmService, approveUmkmService } = require('./umkm.service');
 const { PROFILE_DEFAULT } = require('../../../constant/imageDefault');
+const urlGoogleMap = require('../../../helper/urlGoogleMap');
 
 const getAllUmkmController = async (req, res) => {
     const { page } = req.query

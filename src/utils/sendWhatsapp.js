@@ -1,18 +1,17 @@
-const { FONNTE_API_KEY } = require('../constant/fonnte')
+const fonnte = require('../config/fonnte')
 const axios = require('axios');
 
 const sendWhatsapp = async (phone, message) => {
     try {
-        const response = await axios.post('https://api.fonnte.com/send', {
+        await axios.post('https://api.fonnte.com/send', {
             target: phone,
             message: message,
-            countryCode: '62'
+            countryCode: fonnte.countryCode
         }, {
             headers: {
-                'Authorization': FONNTE_API_KEY,
-                'Content-Type': 'application/json'
+                ...fonnte.headers
             }
-        });        
+        });
     } catch (error) {
         console.error('Error sending WhatsApp message:', error.response ? error.response.data : error.message);
     }
