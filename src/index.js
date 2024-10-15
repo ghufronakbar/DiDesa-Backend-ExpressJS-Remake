@@ -6,14 +6,11 @@ const cors = require('cors');
 const { PORT } = require('./constant');
 const app = express();
 
-
-//PARSE APPLICATION JSON
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-// ROUTES
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/user',require('./routes/user'));
 
