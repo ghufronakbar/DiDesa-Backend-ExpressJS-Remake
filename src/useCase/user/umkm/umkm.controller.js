@@ -99,6 +99,9 @@ const getUmkmByIdController = async (req, res) => {
     const { id } = req.params
     const { isLoggedIn, wargaId } = req.decoded
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         const umkm = await getUmkmByIdService(Number(id), Number(wargaId))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
@@ -127,6 +130,9 @@ const setStatusUmkmController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         const umkm = await setStatusUmkmService(Number(id), wargaId, status)
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: umkm.message })
@@ -150,6 +156,9 @@ const editUmkmController = async (req, res) => {
     const { nama, deskripsi, lokasi, latitude, longitude } = req.body
     const gambar = req.file ? req.file.path : null
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         if (!wargaId || !isLoggedIn) {
             if (req.file && req.file.path) { await removeCloudinary(req.file.path, "umkm") }
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
@@ -182,6 +191,9 @@ const deleteUmkmController = async (req, res) => {
     try {
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
+        }
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
         }
         const umkm = await deleteUmkmService(Number(id), Number(wargaId))
         if (umkm instanceof Error) {

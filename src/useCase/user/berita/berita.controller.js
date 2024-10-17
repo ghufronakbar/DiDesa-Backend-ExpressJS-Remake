@@ -7,6 +7,7 @@ const getBeritaController = async (req, res) => {
     const search = req.query.search || ''
     try {
         const queryLimit = limit ? Number(limit) : 5
+        if (isNaN(queryLimit)) return res.status(400).json({ status: 400, isLoggedIn, message: 'Parameter limit harus berupa angka' })
         if (q === 'prioritas') {
             const { berita, count } = await getBeritaPrioritasService(queryLimit)
             const dataLength = {
@@ -39,6 +40,9 @@ const getDetailBeritaController = async (req, res) => {
     const { id } = req.params
     const { wargaId, isLoggedIn } = req.decoded
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         const berita = await getDetailBeritaService(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })

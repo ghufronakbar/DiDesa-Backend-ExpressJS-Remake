@@ -3,7 +3,10 @@ const { createKomentarService, deleteKomentarService } = require('./komentar.ser
 const createKomentarController = async (req, res) => {
     const { isi, beritaId } = req.body
     const { wargaId, isLoggedIn } = req.decoded
-    try {      
+    try {
+        if (isNaN(beritaId)) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         if (!isi || !beritaId) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Semua field wajib diisi' })
         }
@@ -22,6 +25,9 @@ const deleteKomentarController = async (req, res) => {
     const { id } = req.params
     const { wargaId, isLoggedIn } = req.decoded
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         if (!wargaId || !isLoggedIn) {
             return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
         }

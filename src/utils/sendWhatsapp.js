@@ -2,6 +2,7 @@ const fonnte = require('../config/fonnte')
 const axios = require('axios');
 
 const sendWhatsapp = async (phone, message) => {
+    console.log("Sending WhatsApp message to: ", phone);
     try {
         await axios.post('https://api.fonnte.com/send', {
             target: phone,
@@ -12,8 +13,9 @@ const sendWhatsapp = async (phone, message) => {
                 ...fonnte.headers
             }
         });
+        console.log("Message sent successfully");
     } catch (error) {
-        console.error('Error sending WhatsApp message:', error.response ? error.response.data : error.message);
+        console.log('Error sending WhatsApp message:', error.response ? error.response.data : error.message);
     }
 };
 

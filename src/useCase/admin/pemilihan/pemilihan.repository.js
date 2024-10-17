@@ -138,13 +138,11 @@ const getWargaById = async (wargaId) => {
 const countPemilihanAfterToday = async () => {
     const pemilihan = await prisma.pemilihanKetua.count({
         where: {
-            tanggalMulai: {
-                gte: new Date()
-            },
             tanggalSelesai: {
                 gte: new Date()
             }
-        },
+        }
+
     })
     return pemilihan
 }

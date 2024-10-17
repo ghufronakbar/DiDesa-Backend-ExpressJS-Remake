@@ -73,7 +73,7 @@ const createCalonService = async (wargaId, pemilihanKetuaId, deskripsi) => {
     if (checkPemilihan.tanggalSelesai < new Date()) {
         return new Error('Pemilihan yang Sudah Selesai Tidak Bisa Diubah')
     }
-    if (checkPemilihan.tanggalMulai < new Date()) {
+    if (checkPemilihan.tanggalMulai < new Date() && checkPemilihan.tanggalSelesai > new Date()) {
         return new Error('Pemilihan yang Sedang Berlangsung Tidak Bisa Diubah')
     }
     const checkWarga = await getWargaById(wargaId)
@@ -121,7 +121,7 @@ const deleteCalonService = async (calonKetuaId) => {
     if (checkPemilihan.tanggalSelesai < new Date()) {
         return new Error('Pemilihan yang Sudah Selesai Tidak Bisa Diubah')
     }
-    if (checkPemilihan.tanggalMulai < new Date()) {
+    if (checkPemilihan.tanggalMulai < new Date() && checkPemilihan.tanggalSelesai > new Date()) {
         return new Error('Pemilihan yang Sedang Berlangsung Tidak Bisa Diubah')
     }
     const calon = await deleteCalon(calonKetuaId)

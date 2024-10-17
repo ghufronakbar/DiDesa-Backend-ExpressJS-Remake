@@ -44,7 +44,7 @@ const approveUmkmService = async (umkmId, approve) => {
     const dateISO = date.toISOString()
     let message = ''
     if (umkm.approve === false) {
-        const setFalse = await setInactiveUmkm(umkmId)
+        await setInactiveUmkm(umkmId)
         message = messageNotApproveUmkm(umkmCheck.nama, umkmCheck.jenisUmkm.namaJenisUmkm, umkmCheck.warga.namaLengkap)
     } else {
         message = messageApproveUmkm(umkmCheck.nama, umkmCheck.jenisUmkm.namaJenisUmkm, umkmCheck.warga.namaLengkap, dateISO)

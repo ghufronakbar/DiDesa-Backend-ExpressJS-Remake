@@ -5,6 +5,7 @@ const getAllWargaController = async (req, res) => {
     const { page } = req.query
     try {
         const queryPage = page ? Number(page) : 1
+        if (isNaN(queryPage)) return res.status(400).json({ status: 400, message: 'Parameter page harus berupa angka' })
         const { warga, count } = await getAllWargaService(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -25,6 +26,9 @@ const getAllWargaController = async (req, res) => {
 const getWargaByIdController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const warga = await getWargaByIdService(Number(id))
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })
@@ -61,7 +65,10 @@ const editWargaController = async (req, res) => {
     const { id } = req.params
     const { nik, kk, namaLengkap, tanggalLahir, telepon } = req.body
     try {
-        if (!id || !nik || !kk || !namaLengkap || !tanggalLahir || !telepon) {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
+        if (!nik || !kk || !namaLengkap || !tanggalLahir || !telepon) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
@@ -81,6 +88,9 @@ const editWargaController = async (req, res) => {
 const deleteWargaController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const warga = await deleteWargaService(Number(id))
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })

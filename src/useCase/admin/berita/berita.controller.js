@@ -4,6 +4,7 @@ const berita = async (req, res) => {
     const { page } = req.query
     try {
         const queryPage = page ? Number(page) : 1
+        if (isNaN(queryPage)) return res.status(400).json({ status: 400, message: 'Parameter page harus berupa angka' })
         const { berita, count } = await showBerita(queryPage)
         const pagination = {
             currentPage: queryPage,
@@ -21,6 +22,9 @@ const berita = async (req, res) => {
 const beritaById = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const berita = await showBeritaById(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
@@ -55,6 +59,9 @@ const editBeritaById = async (req, res) => {
     const { judul, isi, subjudul } = req.body
     const gambar = req.file ? req.file.path : null
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         if (!id || !judul || !isi || !subjudul) {
             return res.status(400).json({ status: 400, message: 'Semua field wajib diisi' })
         }
@@ -74,6 +81,9 @@ const editBeritaById = async (req, res) => {
 const deleteBerita = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const berita = await deleteBeritaById(Number(id))
         if (berita instanceof Error) {
             return res.status(400).json({ status: 400, message: berita.message })
@@ -89,6 +99,9 @@ const editPublikasi = async (req, res) => {
     const { id } = req.params
     const { publikasi } = req.body
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         let message
         if (publikasi === true) {
             message = 'Berhasil mempublikasikan berita'
@@ -110,6 +123,9 @@ const editPrioritas = async (req, res) => {
     const { id } = req.params
     const { prioritas } = req.body
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         let message
         if (prioritas === true) {
             message = 'Berita ditandai sebagai prioritas'

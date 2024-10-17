@@ -33,6 +33,9 @@ const getAllPemilihanController = async (req, res) => {
 const getPemilihanByIdController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const pemilihan = await getAllPemilihanByIdService(Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
@@ -97,6 +100,9 @@ const editPemilihanController = async (req, res) => {
     const { judul, deskripsi, tanggalMulai, tanggalSelesai } = req.body
     const date = new Date()
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         if (!id || !judul || !deskripsi || !tanggalMulai || !tanggalSelesai) {
             return res.status(400).json({
                 status: 400,
@@ -129,6 +135,9 @@ const editPemilihanController = async (req, res) => {
 const deletePemilihanController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const pemilihan = await deletePemilihanService(Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
@@ -143,6 +152,9 @@ const deletePemilihanController = async (req, res) => {
 const createCalonController = async (req, res) => {
     const { wargaId, pemilihanKetuaId, deskripsi } = req.body
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         if (!wargaId || !pemilihanKetuaId || !deskripsi) {
             return res.status(400).json({
                 status: 400,
@@ -164,6 +176,9 @@ const editCalonController = async (req, res) => {
     const { id } = req.params
     const { deskripsi } = req.body
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         if (!id || !deskripsi) {
             return res.status(400).json({
                 status: 400,
@@ -184,6 +199,9 @@ const editCalonController = async (req, res) => {
 const deleteCalonController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const calon = await deleteCalonService(Number(id))
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })
@@ -198,6 +216,9 @@ const deleteCalonController = async (req, res) => {
 const getPemilihanByCalonIdController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const calon = await getPemilihanByCalonIdService(Number(id))
         if (calon instanceof Error) {
             return res.status(400).json({ status: 400, message: calon.message })

@@ -27,6 +27,9 @@ const getPemilihanByIdController = async (req, res) => {
     const { id } = req.params
     const { isLoggedIn, wargaId } = req.decoded
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         const pemilihan = await getPemilihanByIdService(wargaId, Number(id))
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pemilihan.message })
@@ -48,6 +51,9 @@ const doVoteController = async (req, res) => {
     const { isLoggedIn, wargaId } = req.decoded
     const { calonKetuaId } = req.body
     try {
+        if (isNaN(Number(calonKetuaId))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         if (!wargaId || !isLoggedIn) {
             return res.status(400).json({ status: 400, isLoggedIn, message: 'Anda Harus Login Terlebih Dahulu' })
         }

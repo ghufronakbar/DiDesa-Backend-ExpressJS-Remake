@@ -51,12 +51,10 @@ const getPemilihanByIdService = async (wargaId, id) => {
 }
 
 const doVoteService = async (wargaId, calonKetuaId) => {
-
     const [cCalon, cPemilihan] = await Promise.all([
         getCalonById(Number(calonKetuaId)),
         getPemilihanByCalonId(Number(calonKetuaId))
-    ])
-    console.log(cCalon, cPemilihan)
+    ])    
     if (!cCalon) {
         return new Error('Calon Tidak Ditemukan')
     }

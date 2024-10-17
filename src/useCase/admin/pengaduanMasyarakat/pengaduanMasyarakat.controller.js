@@ -4,6 +4,7 @@ const getPengaduanController = async (req, res) => {
     const { page } = req.query
     try {
         const queryPage = page ? Number(page) : 1
+        if (isNaN(queryPage)) return res.status(400).json({ status: 400, message: 'Parameter page harus berupa angka' })
         const { pengaduan, count } = await getPengaduanService(queryPage)
         const pagination = {
             currentPage: queryPage,

@@ -27,6 +27,9 @@ const getAllUmkmController = async (req, res) => {
 const getUmkmByIdController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const umkm = await getUmkmByIdService(Number(id))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, message: umkm.message })
@@ -43,6 +46,9 @@ const getUmkmByIdController = async (req, res) => {
 const deleteUmkmController = async (req, res) => {
     const { id } = req.params
     try {
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         const umkm = await deleteUmkmService(Number(id))
         if (umkm instanceof Error) {
             return res.status(400).json({ status: 400, message: umkm.message })
@@ -58,6 +64,12 @@ const approveUmkmController = async (req, res) => {
     const { id } = req.params
     const { approve } = req.body
     try {
+        if (typeof approve !== 'boolean') {
+            return res.status(400).json({ status: 400, message: 'Data tidak valid' })
+        }
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+        }
         let message
         if (approve) {
             message = 'Berhasil menyetujui UMKM'

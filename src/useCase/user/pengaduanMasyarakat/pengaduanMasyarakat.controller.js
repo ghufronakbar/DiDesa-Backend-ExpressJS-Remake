@@ -46,6 +46,9 @@ const getPengaduanByIdController = async (req, res) => {
         if (!wargaId || !isLoggedIn) {
             return res.status(401).json({ status: 401, isLoggedIn, message: 'Harap Login terlebih dahulu' })
         }
+        if (isNaN(Number(id))) {
+            return res.status(400).json({ status: 400, isLoggedIn, message: 'ID Harus berupa angka' })
+        }
         const pengaduan = await getPengaduanByIdService(Number(id), Number(wargaId))
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, isLoggedIn, message: pengaduan.message })
