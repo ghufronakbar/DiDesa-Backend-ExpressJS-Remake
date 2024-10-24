@@ -70,6 +70,8 @@ model PengaduanMasyarakat {
   isi                   String
   foto                  String?  @db.VarChar(255)
   tanggal               DateTime @default(now())
+  pending               Boolean  @default(true)
+  status                Boolean  @default(false)
   warga                 Warga    @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
 }
 
