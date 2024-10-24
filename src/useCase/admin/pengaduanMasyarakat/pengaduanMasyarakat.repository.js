@@ -52,4 +52,16 @@ const deletePengaduan = async (pengaduanMasyarakatId) => {
     return pengaduan
 }
 
-module.exports = { getAllPengaduanMasyarakat, countPengaduanMasyarakat, deletePengaduan, getPengaduanMasyarakatById }
+const setStatus = async (pengaduanMasyarakatId, status) => {
+    const pengaduan = await prisma.pengaduanMasyarakat.update({
+        where: {
+            pengaduanMasyarakatId
+        },
+        data: {
+            status,
+            pending: false
+        }
+    })
+}
+
+module.exports = { getAllPengaduanMasyarakat, countPengaduanMasyarakat, deletePengaduan, getPengaduanMasyarakatById, setStatus }

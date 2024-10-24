@@ -1,4 +1,4 @@
-const { getPengaduanService, deletePengaduanService, getPengaduanByIdService } = require('./pengaduanMasyarakat.service');
+const { getPengaduanService, deletePengaduanService, getPengaduanByIdService, setStatusService } = require('./pengaduanMasyarakat.service');
 
 const getPengaduanController = async (req, res) => {
     const { page } = req.query
@@ -44,4 +44,25 @@ const deletePengaduanController = async (req, res) => {
     }
 }
 
-module.exports = { getPengaduanController, deletePengaduanController, getPengaduanByIdController }
+const setStatus = async (req, res) => {
+    const { id } = req.params
+    const { status } = req.body
+    if (isNaN(Number(id))) {
+        return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
+    }
+    if (typeof status !== 'boolean') {
+        return res.status(400).json({ status: 400, message: 'Status harus berupa boolean' })
+    }
+    try {
+        const pengaduan = await setStatusService(Number(id), status)
+        if (pengaduan instanceof Error) {
+            return res.status(400).json({ status: 400, message: pengaduan.message })
+        }
+        return res.status(200).json({ status: 200, message: 'Berhasil mengubah status pengaduan', data: pengaduan })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ status: 500, message: 'Ada Kesalahan Sistem' })
+    }
+}
+
+module.exports = { getPengaduanController, deletePengaduanController, getPengaduanByIdController, setStatus }
