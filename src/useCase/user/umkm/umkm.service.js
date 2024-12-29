@@ -69,7 +69,8 @@ const editUmkmService = async (umkmId, data, wargaId) => {
     } else {
         delete data.gambar
     }
-    const umkm = await editUmkm(Number(umkmId), data)
+    const parsedData = { ...data, latitude: Number(data.latitude), longitude: Number(data.longitude) }
+    const umkm = await editUmkm(Number(umkmId), parsedData)
     return umkm
 }
 
