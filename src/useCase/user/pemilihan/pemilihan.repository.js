@@ -100,8 +100,8 @@ const doVote = async (wargaId, calonKetuaId) => {
 const getPemilihanByCalonId = async (calonKetuaId) => {
     const pemilihan = await prisma.pemilihanKetua.findFirst({
         where: {
-            calonKetua:{
-                some:{
+            calonKetua: {
+                some: {
                     calonKetuaId
                 }
             }
@@ -115,7 +115,7 @@ const getCalonById = async (calonKetuaId) => {
         where: {
             calonKetuaId
         },
-        
+
     })
     return calon
 }
@@ -132,7 +132,7 @@ const getCalonByPemilihanId = async (pemilihanKetuaId) => {
 const getLatestPemilihan = async () => {
     const pemilihan = await prisma.pemilihanKetua.findMany({
         orderBy: {
-          pemilihanKetuaId: 'desc'  
+            pemilihanKetuaId: 'desc'
         },
         take: 1,
         include: {
@@ -171,4 +171,13 @@ const getLatestPemilihan = async () => {
     return pemilihan.length > 0 ? pemilihan[0] : null
 }
 
-module.exports = { getAllPemilihan, getPemilihanById, checkVote, doVote, getPemilihanByCalonId, getCalonById, getCalonByPemilihanId, getLatestPemilihan }
+const getWargaById = async (wargaId) => {
+    const warga = await prisma.warga.findFirst({
+        where: {
+            wargaId
+        }
+    })
+    return warga
+}
+
+module.exports = { getAllPemilihan, getPemilihanById, checkVote, doVote, getPemilihanByCalonId, getCalonById, getCalonByPemilihanId, getLatestPemilihan, getWargaById }
