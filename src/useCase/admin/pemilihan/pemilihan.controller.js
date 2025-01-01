@@ -152,7 +152,7 @@ const deletePemilihanController = async (req, res) => {
 const createCalonController = async (req, res) => {
     const { wargaId, pemilihanKetuaId, deskripsi } = req.body
     try {
-        if (isNaN(Number(id))) {
+        if (isNaN(Number(wargaId)) || isNaN(Number(pemilihanKetuaId))) {
             return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
         }
         if (!wargaId || !pemilihanKetuaId || !deskripsi) {
