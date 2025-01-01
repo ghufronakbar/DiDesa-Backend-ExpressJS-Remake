@@ -23,7 +23,7 @@ const createUmkmService = async (nama, deskripsi, lokasi, gambar, latitude, long
     if (!checkJenis) {
         return new Error('Jenis Umkm Tidak Valid')
     }
-    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, latitude, longitude, Number(jenisUmkmId), Number(wargaId))
+    const umkm = await createUmkm(nama, deskripsi, lokasi, gambar, Number(latitude), Number(longitude), Number(jenisUmkmId), Number(wargaId))
     return umkm
 }
 
