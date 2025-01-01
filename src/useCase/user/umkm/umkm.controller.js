@@ -88,6 +88,7 @@ const createUmkmController = async (req, res) => {
         }
         return res.status(200).json({ status: 200, isLoggedIn, message: 'Berhasil mendaftarkan UMKM', data: umkm })
     } catch (error) {
+        console.log(error)
         if (req.file && req.file.path) {
             await removeCloudinary(req.file.path, "umkm")
         }
