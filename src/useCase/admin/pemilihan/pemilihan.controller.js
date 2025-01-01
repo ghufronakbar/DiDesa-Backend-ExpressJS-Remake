@@ -64,7 +64,7 @@ const getPemilihanByIdController = async (req, res) => {
 
 const createPemilihanController = async (req, res) => {
     const { judul, deskripsi, tanggalMulai, tanggalSelesai } = req.body
-    const date = new Date().toISOString().slice(0, 10)
+    const date = new Date()
     try {
         if (!judul || !deskripsi || !tanggalMulai || !tanggalSelesai) {
             return res.status(400).json({
@@ -72,7 +72,7 @@ const createPemilihanController = async (req, res) => {
                 message: 'Data wajib diisi'
             })
         }
-        if (new Date(tanggalMulai).toISOString().slice(0, 10) < date) {
+        if (new Date(tanggalMulai) < date) {
             return res.status(400).json({
                 status: 400,
                 message: 'Pemilihan tidak boleh dibuat sebelum tanggal sekarang'
@@ -98,7 +98,7 @@ const createPemilihanController = async (req, res) => {
 const editPemilihanController = async (req, res) => {
     const { id } = req.params
     const { judul, deskripsi, tanggalMulai, tanggalSelesai } = req.body
-    const date = new Date().toISOString().slice(0, 10);
+    const date = new Date()
     try {
         if (isNaN(Number(id))) {
             return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
@@ -109,7 +109,7 @@ const editPemilihanController = async (req, res) => {
                 message: 'Data wajib diisi'
             })
         }
-        if (new Date(tanggalMulai).toISOString().slice(0, 10) < date) {
+        if (new Date(tanggalMulai) < date) {
             return res.status(400).json({
                 status: 400,
                 message: 'Pemilihan tidak boleh dibuat sebelum tanggal sekarang'
