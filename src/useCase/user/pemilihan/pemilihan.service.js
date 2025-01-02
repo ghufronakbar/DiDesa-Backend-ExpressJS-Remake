@@ -145,6 +145,11 @@ const getLatestPemilihanService = async (wargaId) => {
         pemilihan.isVoteable = false
         pemilihan.status = 'Belum Berlangsung'
     }
+
+    if (pemilihan.isLegal === false) {
+        pemilihan.isVoteable = false
+    }
+
     return pemilihan
 }
 
