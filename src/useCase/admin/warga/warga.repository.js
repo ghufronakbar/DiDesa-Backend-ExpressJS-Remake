@@ -62,7 +62,8 @@ const createWarga = async (nik, namaLengkap, tanggalLahir, password, telepon) =>
             namaLengkap,
             tanggalLahir,
             password,
-            telepon
+            telepon,
+            kk: ""
         }
     })
     return warga
