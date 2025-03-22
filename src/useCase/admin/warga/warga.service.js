@@ -19,14 +19,14 @@ const getWargaByIdService = async (wargaId) => {
     return warga
 }
 
-const createWargaService = async (nik, kk, namaLengkap, tanggalLahir, telepon) => {
+const createWargaService = async (nik, namaLengkap, tanggalLahir, telepon) => {
     const check = await checkByNik(nik)
     if (check) {
         return new Error('NIK sudah terdaftar')
     }
     const password = randomCharacter(8)
     const hashedPassword = await bcrypt.hash(password, 10)
-    const warga = await createWarga(nik, kk, namaLengkap, tanggalLahir, hashedPassword, telepon)
+    const warga = await createWarga(nik, namaLengkap, tanggalLahir, hashedPassword, telepon)
     const message = messageCreate(namaLengkap, nik, password)
     await sendWhatsapp(telepon, message)
     return warga

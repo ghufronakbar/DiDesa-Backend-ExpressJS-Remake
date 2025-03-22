@@ -55,11 +55,10 @@ const checkByNik = async (nik) => {
     return warga
 }
 
-const createWarga = async (nik, kk, namaLengkap, tanggalLahir, password, telepon) => {
+const createWarga = async (nik, namaLengkap, tanggalLahir, password, telepon) => {
     const warga = await prisma.warga.create({
         data: {
             nik,
-            kk,
             namaLengkap,
             tanggalLahir,
             password,

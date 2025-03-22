@@ -42,15 +42,15 @@ const getWargaByIdController = async (req, res) => {
 }
 
 const createWargaController = async (req, res) => {
-    const { nik, kk, namaLengkap, tanggalLahir, telepon } = req.body
+    const { nik, namaLengkap, tanggalLahir, telepon } = req.body
     try {
-        if (!nik || !kk || !namaLengkap || !tanggalLahir || !telepon) {
+        if (!nik || !namaLengkap || !tanggalLahir || !telepon) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
             })
         }
-        const warga = await createWargaService(nik, kk, namaLengkap, tanggalLahir, telepon)
+        const warga = await createWargaService(nik, namaLengkap, tanggalLahir, telepon)
         if (warga instanceof Error) {
             return res.status(400).json({ status: 400, message: warga.message })
         }
