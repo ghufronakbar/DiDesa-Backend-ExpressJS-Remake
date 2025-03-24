@@ -52,14 +52,15 @@ const deletePengaduan = async (pengaduanMasyarakatId) => {
     return pengaduan
 }
 
-const setStatus = async (pengaduanMasyarakatId, status) => {
+const setStatus = async (pengaduanMasyarakatId, status, jawaban) => {
     const pengaduan = await prisma.pengaduanMasyarakat.update({
         where: {
             pengaduanMasyarakatId
         },
         data: {
             status,
-            pending: false
+            pending: false,
+            jawaban
         }
     })
 }

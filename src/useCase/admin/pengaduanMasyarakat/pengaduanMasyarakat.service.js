@@ -30,7 +30,7 @@ const deletePengaduanService = async (pengaduanId) => {
     return pengaduan
 }
 
-const setStatusService = async (pengaduanMasyarakatId, status) => {
+const setStatusService = async (pengaduanMasyarakatId, status, jawaban) => {
     const pengaduan = await getPengaduanMasyarakatById(pengaduanMasyarakatId)
     if (!pengaduan) {
         return new Error('Pengaduan tidak ditemukan')
@@ -38,7 +38,7 @@ const setStatusService = async (pengaduanMasyarakatId, status) => {
     if (!pengaduan.pending) {
         return new Error('Pengaduan sudah di jawab')
     }
-    return await setStatus(pengaduanMasyarakatId, status)
+    return await setStatus(pengaduanMasyarakatId, status, jawaban)
 }
 
 module.exports = { getPengaduanService, deletePengaduanService, getPengaduanByIdService, setStatusService }

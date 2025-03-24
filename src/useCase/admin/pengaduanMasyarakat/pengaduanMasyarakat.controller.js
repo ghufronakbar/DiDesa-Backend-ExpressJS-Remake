@@ -46,15 +46,15 @@ const deletePengaduanController = async (req, res) => {
 
 const setStatus = async (req, res) => {
     const { id } = req.params
-    const { status } = req.body
+    const { status, jawaban } = req.body
     if (isNaN(Number(id))) {
         return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
     }
-    if (typeof status !== 'boolean') {
-        return res.status(400).json({ status: 400, message: 'Status harus berupa boolean' })
+    if (typeof status !== 'boolean' && typeof jawaban !== 'string') {
+        return res.status(400).json({ status: 400, message: 'Semua data wajib diisi' })
     }
     try {
-        const pengaduan = await setStatusService(Number(id), status)
+        const pengaduan = await setStatusService(Number(id), status, jawaban)
         if (pengaduan instanceof Error) {
             return res.status(400).json({ status: 400, message: pengaduan.message })
         }
