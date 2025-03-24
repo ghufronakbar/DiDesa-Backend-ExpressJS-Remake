@@ -146,6 +146,13 @@ const getLatestPemilihanService = async (wargaId) => {
         pemilihan.status = 'Belum Berlangsung'
     }
 
+    // Validasi RW
+
+    if (warga.rw !== pemilihan.rw) {
+        pemilihan.isVoteable = false
+        pemilihan.status = 'Anda Tidak Memiliki Hak Pemilihan Ini (Pemilihan Dilakukan Di RW ' + pemilihan.rw + ')'
+    }
+
     return pemilihan
 }
 

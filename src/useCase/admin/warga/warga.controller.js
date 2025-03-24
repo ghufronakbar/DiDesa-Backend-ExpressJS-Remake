@@ -42,15 +42,15 @@ const getWargaByIdController = async (req, res) => {
 }
 
 const createWargaController = async (req, res) => {
-    const { nik, namaLengkap, tanggalLahir, telepon } = req.body
+    const { nik, namaLengkap, tanggalLahir, telepon, rw } = req.body
     try {
-        if (!nik || !namaLengkap || !tanggalLahir || !telepon) {
+        if (!nik || !namaLengkap || !tanggalLahir || !telepon || !rw) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
             })
         }
-        const warga = await createWargaService(nik, namaLengkap, tanggalLahir, telepon)
+        const warga = await createWargaService(nik, namaLengkap, tanggalLahir, telepon, rw)
         if (warga instanceof Error) {
             return res.status(400).json({ status: 400, message: warga.message })
         }
@@ -63,18 +63,18 @@ const createWargaController = async (req, res) => {
 
 const editWargaController = async (req, res) => {
     const { id } = req.params
-    const { nik, kk, namaLengkap, tanggalLahir, telepon } = req.body
+    const { nik, namaLengkap, tanggalLahir, telepon, rw } = req.body
     try {
         if (isNaN(Number(id))) {
             return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
         }
-        if (!nik || !kk || !namaLengkap || !tanggalLahir || !telepon) {
+        if (!nik || !namaLengkap || !tanggalLahir || !telepon || !rw) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
             })
         }
-        const warga = await editWargaService(Number(id), nik, kk, namaLengkap, tanggalLahir, telepon)
+        const warga = await editWargaService(Number(id), nik, namaLengkap, tanggalLahir, telepon, rw)
         if (warga instanceof Error) {
             return res.status(404).json({ status: 404, message: warga.message })
         }

@@ -26,16 +26,16 @@ const getAllPemilihanByIdService = async (pemilihanKetuaId) => {
     return pemilihan
 }
 
-const createPemilihanService = async (judul, deskripsi, tanggalMulai, tanggalSelesai) => {
+const createPemilihanService = async (judul, deskripsi, tanggalMulai, tanggalSelesai, rw) => {
     const validate = await countPemilihanAfterToday()
     if (validate > 0) {
         return new Error('Sudah Ada Pemilihan Berlangsung')
     }
-    const pemilihan = await createPemilihan(judul, deskripsi, tanggalMulai, tanggalSelesai)
+    const pemilihan = await createPemilihan(judul, deskripsi, tanggalMulai, tanggalSelesai, rw)
     return pemilihan
 }
 
-const editPemilihanService = async (pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai) => {
+const editPemilihanService = async (pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai, rw) => {
     const check = await getPemilihanById(pemilihanKetuaId)
     if (!check) {
         return new Error('Pemilihan Tidak Ditemukan')
@@ -46,7 +46,7 @@ const editPemilihanService = async (pemilihanKetuaId, judul, deskripsi, tanggalM
     if (check.tanggalMulai < new Date()) {
         return new Error('Pemilihan yang Sedang Berlangsung Tidak Bisa Diubah')
     }
-    const pemilihan = await editPemilihan(pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai)
+    const pemilihan = await editPemilihan(pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai, rw)
     return pemilihan
 }
 

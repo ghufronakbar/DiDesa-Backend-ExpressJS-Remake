@@ -63,10 +63,10 @@ const getPemilihanByIdController = async (req, res) => {
 }
 
 const createPemilihanController = async (req, res) => {
-    const { judul, deskripsi, tanggalMulai, tanggalSelesai } = req.body
+    const { judul, deskripsi, tanggalMulai, tanggalSelesai, rw } = req.body
     const date = new Date()
     try {
-        if (!judul || !deskripsi || !tanggalMulai || !tanggalSelesai) {
+        if (!judul || !deskripsi || !tanggalMulai || !tanggalSelesai || !rw) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
@@ -84,7 +84,7 @@ const createPemilihanController = async (req, res) => {
                 message: 'Tanggal tidak valid'
             })
         }
-        const pemilihan = await createPemilihanService(judul, deskripsi, tanggalMulai, tanggalSelesai)
+        const pemilihan = await createPemilihanService(judul, deskripsi, tanggalMulai, tanggalSelesai, rw)
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }
@@ -97,13 +97,13 @@ const createPemilihanController = async (req, res) => {
 
 const editPemilihanController = async (req, res) => {
     const { id } = req.params
-    const { judul, deskripsi, tanggalMulai, tanggalSelesai } = req.body
+    const { judul, deskripsi, tanggalMulai, tanggalSelesai, rw } = req.body
     const date = new Date()
     try {
         if (isNaN(Number(id))) {
             return res.status(400).json({ status: 400, message: 'ID Harus berupa angka' })
         }
-        if (!id || !judul || !deskripsi || !tanggalMulai || !tanggalSelesai) {
+        if (!id || !judul || !deskripsi || !tanggalMulai || !tanggalSelesai || !rw) {
             return res.status(400).json({
                 status: 400,
                 message: 'Data wajib diisi'
@@ -121,7 +121,7 @@ const editPemilihanController = async (req, res) => {
                 message: 'Tanggal tidak valid'
             })
         }
-        const pemilihan = await editPemilihanService(Number(id), judul, deskripsi, tanggalMulai, tanggalSelesai)
+        const pemilihan = await editPemilihanService(Number(id), judul, deskripsi, tanggalMulai, tanggalSelesai, rw)
         if (pemilihan instanceof Error) {
             return res.status(400).json({ status: 400, message: pemilihan.message })
         }

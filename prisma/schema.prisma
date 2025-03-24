@@ -61,6 +61,7 @@ model PemilihanKetua {
   tanggalSelesai   DateTime
   judul            String       @db.VarChar(255)
   deskripsi        String
+  rw               String       @default("003") @db.VarChar(3)
   calonKetua       CalonKetua[]
 }
 
@@ -104,7 +105,8 @@ model Umkm {
 model Warga {
   wargaId             Int                   @id @default(autoincrement())
   nik                 String                @unique @db.VarChar(25)
-  kk                  String                @db.VarChar(25)
+  kk                  String?               @db.VarChar(25)
+  rw                  String                @default("003") @db.VarChar(3)
   namaLengkap         String                @db.VarChar(255)
   tanggalLahir        DateTime
   foto                String?               @db.VarChar(255)
@@ -117,6 +119,7 @@ model Warga {
   pengurusDesaAnggota PengurusDesaAnggota?
   umkm                Umkm[]
   vote                Vote[]
+  forgotPassword      ForgotPassword[]
 }
 
 model Vote {
@@ -131,6 +134,7 @@ model Vote {
 model ForgotPassword {
   forgotPasswordId Int      @id @default(autoincrement())
   wargaId          Int
+  warga            Warga    @relation(fields: [wargaId], references: [wargaId], onDelete: Cascade)
   token            String
   expired          DateTime
   used             Boolean  @default(false)

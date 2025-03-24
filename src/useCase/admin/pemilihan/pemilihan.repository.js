@@ -58,19 +58,20 @@ const getPemilihanById = async (pemilihanKetuaId) => {
     return pemilihan
 }
 
-const createPemilihan = async (judul, deskripsi, tanggalMulai, tanggalSelesai) => {
+const createPemilihan = async (judul, deskripsi, tanggalMulai, tanggalSelesai, rw) => {
     const pemilihan = await prisma.pemilihanKetua.create({
         data: {
             judul,
             deskripsi,
             tanggalMulai,
-            tanggalSelesai
+            tanggalSelesai,
+            rw
         }
     })
     return pemilihan
 }
 
-const editPemilihan = async (pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai) => {
+const editPemilihan = async (pemilihanKetuaId, judul, deskripsi, tanggalMulai, tanggalSelesai, rw) => {
     const pemilihan = await prisma.pemilihanKetua.update({
         where: {
             pemilihanKetuaId
@@ -79,7 +80,8 @@ const editPemilihan = async (pemilihanKetuaId, judul, deskripsi, tanggalMulai, t
             judul,
             deskripsi,
             tanggalMulai,
-            tanggalSelesai
+            tanggalSelesai,
+            rw
         }
     })
     return pemilihan
