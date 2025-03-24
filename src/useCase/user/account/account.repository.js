@@ -36,6 +36,7 @@ const getProfile = async (wargaId) => {
             foto: true,
             pengaduanMasyarakat: true,
             password: true,
+            rw: true,
             _count: {
                 select: {
                     pengaduanMasyarakat: true,
