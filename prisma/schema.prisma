@@ -18,6 +18,7 @@ model Berita {
   publikasi Boolean    @default(false)
   prioritas Boolean    @default(false)
   komentar  Komentar[]
+  rssCode   String?    @unique
 }
 
 model CalonKetua {
