@@ -21,6 +21,21 @@ model Berita {
   rssCode   String?    @unique
 }
 
+model Rss {
+  rssId         Int         @id @default(autoincrement())
+  title         String
+  url           String
+  publisher     String
+  rssCategoryId Int
+  rssCategory   RssCategory @relation(fields: [rssCategoryId], references: [rssCategoryId], onDelete: Cascade)
+}
+
+model RssCategory {
+  rssCategoryId Int    @id @default(autoincrement())
+  name          String
+  rss           Rss[]
+}
+
 model CalonKetua {
   calonKetuaId     Int            @id @default(autoincrement())
   pemilihanKetuaId Int
