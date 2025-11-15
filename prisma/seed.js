@@ -4,7 +4,7 @@ const { checkGuest, createGuest } = require('./seedGuest')
 const { checkInformasi, createInformasi } = require('./seedInformasi')
 const { createJenisUmkm, checkJenisUmkm } = require('./seedJenisUmkm')
 const { checkPengurus, createPengurus } = require('./seedPengurus')
-const { checkWarga, createWarga } = require('./seedWarga')
+const { checkWarga, createWarga, createWargaCalonKetua } = require('./seedWarga')
 
 const seeds = async () => {
     try {
@@ -13,6 +13,7 @@ const seeds = async () => {
         const informasi = await checkInformasi()
         const guest = await checkGuest()
         const jenisUmkm = await checkJenisUmkm()
+        const calonKetua = await createWargaCalonKetua()
 
         let id
         if (warga) {
