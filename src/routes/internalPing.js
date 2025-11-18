@@ -161,6 +161,7 @@ router.get("/", async (req, res) => {
 // CNBC mapper (unchanged)
 const mapCnbcToBerita = (item) => {
   if (!item?.guid || !item?.title || !item.content) return null;
+  if (!item?.enclosure?.url && !item?.thumbnail && !item?.image) return null;
   const code = `cnbc-${item?.guid}`;
   return {
     judul: item?.title || "",
@@ -188,6 +189,8 @@ const mapAntaraToBerita = async (item) => {
       imageUrl = match[1];
     }
   }
+
+  if (!imageUrl) return null;
 
   // fetch full content with timeout and safe fallback
   const fullContent = await fullContentAntara(item.link, 8000).catch(() => "");
